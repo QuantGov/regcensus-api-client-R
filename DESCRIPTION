@@ -1,7 +1,7 @@
-Package: regdata
+Package: regdataAPI
 Type: Package
 Title: Generate Data Frames from RegData
-Version: 0.1.0.0000
+Version: 0.1.0.0003
 Authors@R: person("Michael", "Kotrous", email = "mkotrous@mercatus.gmu.edu",
                   role = c("aut", "cre"))
 Description: Query topics, series, and jurisdictions in the RegData library and return their values.
@@ -14,5 +14,4 @@ Imports: jsonlite (>= 1.5)
 Depends: R (>= 3.5.2)
 Author: Michael Kotrous [aut, cre]
 Maintainer: Michael Kotrous <mkotrous@mercatus.gmu.edu>
-Built: R 3.5.2; ; 2019-08-21 19:53:40 UTC; unix
 RoxygenNote: 6.1.1

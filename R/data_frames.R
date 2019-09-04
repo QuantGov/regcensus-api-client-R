@@ -62,18 +62,18 @@ get_seriesyear <- function(jurisdictionID = NA) {
 # Values API request requires three parameters
 #   1. seriesCode(s)
 #   2. time(s)
-get_values <- function(geoCode, seriesCode, time, agency = NA, industry = NA, dateIsRange = TRUE) {
+get_values <- function(jurisdiction, seriesCode, time, agency = NA, industry = NA, dateIsRange = TRUE) {
     # E.g., http://ec2-54-225-4-62.compute-1.amazonaws.com:8080/regdata/values?geo=06&seriesCode=RG_RSTR00000002NA&time=2019
-    geoCodestr <- paste(geoCode, collapse=",")
+    geoCodestr <- paste(jurisdiction, collapse=",")
     seriesCodestr <- paste(seriesCode, collapse=",")
     timestr <- paste(time, collapse = ",")
 
     if (dateIsRange) {
-        apicall <- paste0(get_baseURL(), "/values?geo=", geoCodestr, "&seriesCode=", seriesCodestr, "&time=", timestr, "&dateIsRange=", dateIsRange)
+        apicall <- paste0(get_baseURL(), "/values?jurisdictions=", geoCodestr, "&seriesCodes=", seriesCodestr, "&time=", timestr, "&dateIsRange=", dateIsRange)
     } else {
-        apicall <- paste0(get_baseURL(), "/values?geo=", geoCodestr, "&seriesCode=", seriesCodestr, "&time=", timestr)
+        apicall <- paste0(get_baseURL(), "/values?jurisdictions=", geoCodestr, "&seriesCodes=", seriesCodestr, "&time=", timestr)
     }
-    json <- fromJSON(apicall)
+    json <- jsonlite::fromJSON(apicall, flatten = T) #8/25/2019: Kofi added the flatten option to T, included full fromJSON reference
     values_df <- as.data.frame(json)
     return(values_df)
 }

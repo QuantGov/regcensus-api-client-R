@@ -1,7 +1,7 @@
 # HELPER FUNCTIONS
 ## Get base url
 get_baseURL <- function() {
-    return("http://ec2-52-87-213-8.compute-1.amazonaws.com:8080/regdata")
+    return("http://ec2-3-89-6-158.compute-1.amazonaws.com:8080/regdata/")
 }
 
 ## Generate API call from controller and requested ID
@@ -13,7 +13,7 @@ regdata_json_request <- function(controller, id) {
     } else {
         apicall <- paste0(base_url, "/", controller)
     }
-    json <- fromJSON(apicall)
+    json <- jsonlite::fromJSON(apicall) #8/26/2019, Kofi: added full path to fromJSON
     return(json)
 }
 
