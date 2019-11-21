@@ -85,41 +85,49 @@ list_agencies <- function(jurisdictionIDs = NULL) {
 #' list_series(1)
 #' list_series(1, by="series")
 #' list_series("1", by="series")
-#' list_series(c("RG_RSTR0000002A", "RG_RSTR0000001A", "RG_RSTR0000007A"), by="seriesCodes")
+#' list_series(c("RG_RSTR0000002A", "RG_RSTR0000001A", "RG_RSTR0000007A"), by="series")
 #' list_series(c(244, 216, 206, 189), by="agencies")
 #' list_series(c("06", "10"), by="jurisdictions")
 #' list_series(1, by="topic")
-list_series <- function(id = NA, by = c("series", "seriesCodes", "agencies", "jurisdictions", "topic")) {
+list_series <- function(id = NA, by = c("all", "series", "agencies", "industries", "jurisdictions", "topics")) {
     by <- match.arg(by)
 
     ## check length of id argument to make it sure it is compatible with selected series filter (write error messages later)
     id_len <- length(id)
 
-    if (by == "series") {
+    if (by == "all") {
         url <- regdata_json_requestURL("series", id)
         json <- regdata_json_request("series", id)
-    } else if (by == "seriesCodes") {
+    } else if (by == "series") {
+        if(is.na(id))
+            stop("You must provide the series in the 'id' parameter.")
         # more than one seriesCode can be passed, so collapse into comma-separated list
         idstr <- paste(id, collapse=",")
-        url <- regdata_json_requestURL(paste0("series/seriesCode?seriesCodes=", idstr), id=NA)
-        json <- regdata_json_request(paste0("series/seriesCode?seriesCodes=", idstr), id=NA)
+        url <- regdata_json_requestURL(paste0("series/seriesCode?series=", idstr), id=NA)
+        json <- regdata_json_request(paste0("series/seriesCode?series=", idstr), id=NA)
     } else if (by == "agencies") {
+        if(is.na(id))
+            stop("You must provide the agency in the 'id' parameter.")
         # more than one agency can be passed, so collapse into comma-separated list
         idstr <- paste(id, collapse=",")
         url <- regdata_json_requestURL(paste0("series/agencies?agencies=", idstr), id=NA)
         json <- regdata_json_request(paste0("series/agencies?agencies=", idstr), id=NA)
     } else if (by == "jurisdictions") {
         # more than one geoCode can be passed, so collapse into comma-separated list
+        if(is.na(id))
+            stop("You must provide jurisdiction in the 'id' parameter.")
         idstr <- paste(id, collapse=",")
-        url <- regdata_json_requestURL(paste0("series/jurisdiction?geoCodes=", idstr), id=NA)
-        json <- regdata_json_request(paste0("series/jurisdiction?geoCodes=", idstr), id=NA)
+        url <- regdata_json_requestURL(paste0("series/jurisdiction?jurisdictions=", idstr), id=NA)
+        json <- regdata_json_request(paste0("series/jurisdiction?jurisdictions=", idstr), id=NA)
     } else {
+        if(is.na(id))
+            stop("You must provide the topic in the 'id' parameter.")
         url <- regdata_json_requestURL("series/topics", id)
         json <- regdata_json_request("series/topics", id)
     }
 
     if (length(json) > 0) {
-        series_text <- paste0(json$seriesName, " (ID: ", json$seriesID, "; Code: ", json$seriesCode, ")")
+        series_text <- paste0(json$seriesName, " (Series ID: ", json$seriesID, "; Series Code: ", json$seriesCode, ")")
     } else {
         series_text <- "No series found"
     }
