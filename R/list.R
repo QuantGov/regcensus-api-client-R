@@ -4,6 +4,7 @@
 #'
 #' @param topicID An integer.
 #' @return List of topics and their corresponding IDs in the console.
+#' @export
 #' @examples
 #' list_topics()
 #' list_topics(1)
@@ -21,6 +22,7 @@ list_topics <- function(topicID = NA) {
 #'
 #' @param jurisdictionID An integer.
 #' @return List of jurisdictions and their corresponding IDs and geoCodes in the console.
+#' @export
 #' @examples
 #' list_jurisdictions()
 #' list_jurisdictions(38)
@@ -41,6 +43,7 @@ list_jurisdictions <- function(jurisdictionID = NA) {
 #'
 #' @param jurisdictionIDs An integer or vector of integers.
 #' @return List of agencies and their corresponding IDs and geoCodes in the console.
+#' @export
 #' @examples
 #' list_agencies()
 #' list_agencies(38)
@@ -80,14 +83,15 @@ list_agencies <- function(jurisdictionIDs = NULL) {
 #' @param id An integer or vector of integers. See description above and examples below for when vectors are allowed and when single values are required.
 #' @param by A string specifying what type of identifier you are trying to pass in the "id" parameter. Default is "series," and accepted values are "seriesCodes", "agencies", "jurisdictions", and "topic".
 #' @return List of series and their corresponding IDs and series codes in the console.
+#' @export
 #' @examples
 #' list_series()
 #' list_series(1)
 #' list_series(1, by="series")
 #' list_series("1", by="series")
-#' list_series(c("RG_RSTR0000002A", "RG_RSTR0000001A", "RG_RSTR0000007A"), by="series")
+#' list_series(c(91, 92, 100), by="series")
 #' list_series(c(244, 216, 206, 189), by="agencies")
-#' list_series(c("06", "10"), by="jurisdictions")
+#' list_series(c(38, 10), by="jurisdictions")
 #' list_series(1, by="topic")
 list_series <- function(id = NA, by = c("all", "series", "agencies", "industries", "jurisdictions", "topics")) {
     by <- match.arg(by)
@@ -150,6 +154,7 @@ list_series <- function(id = NA, by = c("all", "series", "agencies", "industries
 #'
 #' @param jurisdictionID An integer. Only one jurisdiction value may be passed as an argument.
 #' @return List of series with information for each series regarding start year, end years, and total years available, by jurisdiction
+#' @export
 #' @examples
 #' list_seriesyear()
 #' list_seriesyear(4)

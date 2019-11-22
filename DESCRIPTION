@@ -1,21 +1,22 @@
-Package: regdataAPI
+Package: regcensusAPI
 Type: Package
 Title: Generate Data Frames from RegData
 Version: 0.2.9.9000
 Authors@R: person("Michael", "Kotrous", email = "mkotrous@mercatus.gmu.edu",
                   role = c("aut", "cre"))
 Description: Query topics, series, and jurisdictions in the RegData library and return their values.
-License: MIT
-URL: https://quantgov.org/
-BugReports: https://github.com/QuantGov
+License: MIT + file LICENSE
+URL: https://api.quantgov.org/
+BugReports: https://github.com/QuantGov/regcensus-api
 Encoding: UTF-8
 LazyData: true
-Imports: jsonlite (>= 1.5),snakecase (>= 0.92)
+Imports: jsonlite (>= 1.5),snakecase (>= 0.1), pander (>= 0.6.2)
 Depends: R (>= 3.5.2)
 Author: Michael Kotrous [aut, cre]
 Maintainer: Michael Kotrous <mkotrous@mercatus.gmu.edu>
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

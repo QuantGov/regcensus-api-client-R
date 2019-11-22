@@ -1,4 +1,17 @@
 # RETURN DATA FRAMES FROM USER REQUESTS
+
+
+
+#' Return list of topics in RegCensus
+#'
+#' @param topicID
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' get_topics(1)
+#' get_topics()
 get_topics <- function(topicID = NA) {
     topics <- regdata_json_request("topics", topicID)
     topic_df <- as.data.frame(topics)
@@ -6,13 +19,30 @@ get_topics <- function(topicID = NA) {
     return(topic_df)
 }
 
-get_jurisdictions <- function(jurisdictionID = NA) {
-    jurisdictions <- regdata_json_request("jurisdictions", jurisdictionID)
+
+#' Generate a list of jurisdictions in RegData
+#'
+#' @param jurisdiction An integer.
+#' @return List of jurisdictions
+#' @examples
+#' get_jurisdictions()
+#' get_jurisdictions(1)
+get_jurisdictions <- function(jurisdiction = NA) {
+    jurisdictions <- regdata_json_request("jurisdictions", jurisdiction)
     jurisdiction_df <- as.data.frame(jurisdictions)
     names(jurisdiction_df) <- snakecase::to_snake_case(names(jurisdiction_df))
     return(jurisdiction_df)
 }
 
+#' Return a list of industries with data in RegCensus
+#'
+#' @param jurisdictionID An integer, the jurisdiction ID
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' get_industries(38)
 get_industries <- function(jurisdictionID=NA){
     if(is.na(jurisdictionID)){
         print("You must specify a jurisdiction. Select from: ")
@@ -23,6 +53,15 @@ get_industries <- function(jurisdictionID=NA){
     industry_df <-as.data.frame(industries)
 }
 
+#' Return a dataframe of all agencies in a jurisdiction
+#'
+#' @param jurisdictionIDs An integer
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' get_agencies(38)
 get_agencies <- function(jurisdictionIDs = NULL) {
     if (!is.null(jurisdictionIDs)) {
         id_str <- paste(jurisdictionIDs, collapse=",")
@@ -35,7 +74,21 @@ get_agencies <- function(jurisdictionIDs = NULL) {
     return(agencies_df)
 }
 
-get_series <- function(id = NA, by = c("all","series", "agencies", "industries", "jurisdictions", "topics")) {
+#' Return a dataframe with the series for the id specified
+#'
+#' @param id An integer, id for the by parameter
+#' @param by
+#'
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' get_series(by='all')
+#' get_series(id=38, by = 'jurisdictions')
+#' get_series(id=91, by = 'series')
+get_series <- function(id = NA, by = c("all","series", "agencies",
+                                       "industries", "jurisdictions", "topics")) {
     by <- match.arg(by)
 
     if (by == "all") {
@@ -61,6 +114,16 @@ get_series <- function(id = NA, by = c("all","series", "agencies", "industries",
     return(series_df)
 }
 
+#' Return dataframe with all jurisdictions-series-years of data available
+#'
+#' @param jurisdictionID
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' get_seriesyear()
+#' get_seriesyear(38)
 get_seriesyear <- function(jurisdictionID = NA) {
     if (is.na(jurisdictionID)) {
         json <- regdata_json_request("jurisdictions/available", NA)
@@ -73,9 +136,23 @@ get_seriesyear <- function(jurisdictionID = NA) {
     return(seriesyear_df)
 }
 
-# Values API request requires three parameters
-#   1. seriesCode(s)
-#   2. time(s)
+
+#' Return dataframe with values of series of interest
+#'
+#' @param jurisdiction
+#' @param series
+#' @param time
+#' @param agency
+#' @param industry
+#' @param dateIsRange
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' get_values(jurisdiction = 38, series = c(92), time = c(1990,2000),
+#' industry = c('111','33'), agency = c(66,111))
+
 get_values <- function(jurisdiction, series, time, agency=NA , industry=NA, dateIsRange = TRUE) {
     # E.g., http://ec2-54-225-4-62.compute-1.amazonaws.com:8080/regdata/values?geo=06&seriesCode=RG_RSTR00000002NA&time=2019
     geoCodestr <- paste(jurisdiction, collapse=",")
