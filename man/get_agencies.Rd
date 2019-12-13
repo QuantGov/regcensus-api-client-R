@@ -7,7 +7,7 @@
 get_agencies(jurisdictionIDs = NULL)
 }
 \arguments{
-\item{jurisdictionIDs}{}
+\item{jurisdictionIDs}{An integer}
 }
 \value{
 dataframe

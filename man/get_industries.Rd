@@ -7,7 +7,7 @@
 get_industries(jurisdictionID = NA)
 }
 \arguments{
-\item{jurisdictionID}{}
+\item{jurisdictionID}{An integer, the jurisdiction ID}
 }
 \description{
 Return a list of industries with data in RegCensus

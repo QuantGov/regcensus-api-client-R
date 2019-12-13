@@ -8,6 +8,8 @@ get_series(id = NA, by = c("all", "series", "agencies", "industries",
   "jurisdictions", "topics"))
 }
 \arguments{
+\item{id}{An integer, id for the by parameter}
+
 \item{by}{}
 }
 \value{

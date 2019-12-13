@@ -24,6 +24,7 @@ get_topics <- function(topicID = NA) {
 #'
 #' @param jurisdiction An integer.
 #' @return List of jurisdictions
+#' @export
 #' @examples
 #' get_jurisdictions()
 #' get_jurisdictions(1)
@@ -195,4 +196,71 @@ get_values <- function(jurisdiction, series, time, agency=NA , industry=NA, date
     values_df <- as.data.frame(json)
     names(values_df) <- snakecase::to_snake_case(names(values_df))
     return(values_df)
+}
+
+#' Return values for a list of jurisdictions-series-year combination. It will return data for both
+#' national and sub-national (for example, state/province) within the jurisdiction.
+#'
+#' @param jurisdiction Jurisdiction IDs for the data
+#' @param series Series IDs
+#' @param years Integers for years
+#' @param industries
+#' @param dateIsRange A boolean to indicate if the years values is range instead of just single values
+#' @param filtered A boolean
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' get_country_series(jurisdiction=c(38), series=(1,2), years=c(2010,2011))
+#' get_country_series(jurisdiction=c(38), series=(1,2), years=c(2010,2011), industries=c('111','521'))
+get_country_values<-function(jurisdiction=c(38,75), series = c(1,2),
+                             years = c(2010,2011), industries = NA,
+                             dateIsRange=TRUE, filtered=TRUE){
+    if(is.na(years)){
+      stop("You need to include valid years")
+    }else
+        yearStr <- paste0(years, collapse=",")
+
+    if(is.na(jurisdiction)){
+        print("You need to select at least one of the following jurisdiction IDs")
+        print(list_jurisdictions())
+        stop()
+    }else{
+        jurisdictionStr <- paste0(jurisdiction, collapse=",")
+        url_compose <- paste0(get_baseURL(),"/values/country?countries=",jurisdictionStr,"&years=",yearStr)
+    }
+
+    if(is.na(series)){
+        print("You need to select at least one of the following series IDs")
+        print(list_series())
+        stop()
+
+    }else{
+        seriesStr <- paste0(series, collapse=",")
+        url_compose <- paste0(url_compose, "&series=",seriesStr)
+    }
+
+    if(is.na(industries)){
+        industriesStr <- '0'
+    }else{
+        industriesStr <- paste0(industries, collapse=",")
+        url_compose <- paste0(url_compose, "&industries=",industriesStr)
+    }
+
+    if(dateIsRange==FALSE)
+        url_compose <- paste0(url_compose,"&dateIsRange=", dateIsRange)
+
+    if(filtered==FALSE)
+      url_compose <- paste0(url_compose,"&filteredOnly=",filtered)
+
+    print(url_compose)
+
+    json <- jsonlite::fromJSON(url_compose, flatten = T)
+
+    values_df <- as.data.frame(json)
+    names(values_df) <- snakecase::to_snake_case(names(values_df))
+
+    return (values_df)
+
 }

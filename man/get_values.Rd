@@ -17,5 +17,6 @@ dataframe
 Return dataframe with values of series of interest
 }
 \examples{
-get_values(jurisdiction = 38, series = c(92), time = c(1990,2000), industry = c('111','33'), agency = c(66,111))
+get_values(jurisdiction = 38, series = c(92), time = c(1990,2000),
+industry = c('111','33'), agency = c(66,111))
 }

@@ -7,7 +7,7 @@
 get_jurisdictions(jurisdiction = NA)
 }
 \arguments{
-\item{jurisdition}{An integer.}
+\item{jurisdiction}{An integer.}
 }
 \value{
 List of jurisdictions

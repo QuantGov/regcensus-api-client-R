@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(regdataAPI)
+library(regcensusAPI)
 ```
 ## Introduction
 
@@ -128,17 +128,16 @@ Using the __dplyr__ package, we can merge the agency data with the values data a
 This code function assumes you have loaded the 
 ```{r, results='asis'}
 require(dplyr)
-require(tidyverse)
 require(pander)
-agencies <- get_agencies()
-agency_by_industry <- get_values(jurisdiction = 38,
-                                 series = c(92), time = c(1990,2000), 
-                                 industry = c('111','33'), 
-                                 agency = c(66,111))
-agency_restrictions_ind <- agency_by_industry %>%
-  dplyr::left_join(agencies, by=c('agency_agency_id'='agency_id'))
+#agencies <- get_agencies()
+#agency_by_industry <- get_values(jurisdiction = 38,
+#                                 series = c(92), time = c(1990,2000), 
+#                                 industry = c('111','33'), 
+#                                 agency = c(66,111))
+#agency_restrictions_ind <- agency_by_industry %>%
+#  dplyr::left_join(agencies, by=c('agency_agency_id'='agency_id'))
 
-pander::pandoc.table(agency_restrictions_ind)
+#pander::pandoc.table(agency_restrictions_ind)
 ```
 
 
