@@ -29,12 +29,13 @@ The API organizes data around topics, which are then divided into series. Within
 
 A fundamental concept in RegData is the "document." In RegData, a set of documents represents a body of regulations for which we have produced regulatory restriction counts. For example, to produce restrictions data the US Federal government, RegData uses the Code of Federal Regulations (CFR) as the source documents. Within the CFR, RegData identifies a unit of regulation as the title-part combination. The CFR is organized into 50 titles, and within each title are parts, which could have subparts, but not always. Under the parts are sections. Determining this unit of analyses is critical for the context of the data produced by RegData. Producing regulatory restriction data for US states follows the same strategy but uses the state-specific regulatory code. 
 
-There are three helper functions to quickly view the list of topics, series available. To see the list of topics, series, agencies, jurisdictions, and finally the list of series and the years available for each. The list functions begin with __list__. For example, to view the list of topics call __list_topics()__. When an topic id parameter is supplied, the function returns the details about a specific topic. 
+There are six helper functions to retrieve information about these key components of regdata. These functions provider the following information: topics, documents, jurisdictions, series, agencies, and years with data. The list functions begin with __list__. For example, to view the list of topics call __list_topics()__. When an topic id parameter is supplied, the function returns the details about a specific topic. 
 ```{r}
 #list_topics()
 ```
-Each topic comprises one or more *series*. The __list_series()__ function returns the list of all series when no series id is provided and the 
-Under each topic are __series__. You can get the list of all series by calling the helper function __list_series()__.
+
+Each topic comprises one or more *series*. The __list_series()__ function returns the list of all series when no series id is provided. 
+
 ```{r list-series-example, eval=TRUE, include=FALSE, echo=TRUE}
 #list_series(id = 91)
 ```
@@ -50,7 +51,7 @@ There are other helper functions that give you a tour around RegData. To see the
 ```{r}
 #list_jurisdictions(jurisdictionID = 38)
 ```
-Finally, the __list_seriesyear()__ function returns a list of all seriesa nd the years with data available. 
+The __list_seriesyear()__ function returns a list of all seriesa nd the years with data available. 
 The output from this function can serve as a reference for the valid values that can be passed to parameters in the __get_values()__ function. The number of records returned is the unique combination of series and jurisdictions that are available in RegData.The function takes the optional argument jurisdiction id.
 
 ```{r}

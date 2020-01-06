@@ -53,7 +53,7 @@ list_agencies <- function(jurisdictionIDs = NULL) {
     ## I use NULL rather than NA for this function to deal with case of multiple ids being passed.
     ## if (is.na(c(10,NA))) returns FALSE because it only checks first value.
     if (!is.null(jurisdictionIDs)) {
-        id_str <- paste(jurisdictionIDs, collapse=",")
+        id_str <- paste(jurisdictionIDs, collapse = ",")
         json <- regdata_json_request(paste0("agencies/jurisdiction?jurisdictions=", id_str), NA)
     } else {
         json <- regdata_json_request("agencies", NA)
@@ -180,4 +180,24 @@ list_seriesyear <- function(jurisdictionID = NA) {
     }
 
     return(seriesyear_text)
+}
+
+
+#' List the document types available for a jurisdiction or all jurisdiction
+#'
+#'
+#' @return Data frame with the list of document types available
+#' @export
+#'
+#' @examples
+list_document_types <- function(){
+        json <- regdata_json_request("documenttypes")
+
+        if (length(json) > 0) {
+            document_text <- paste0(json$subtypeName, " (ID: ", json$documentSubtypeID, ")")
+        } else {
+            document_text <- "No document found"
+        }
+        return(document_text)
+
 }
