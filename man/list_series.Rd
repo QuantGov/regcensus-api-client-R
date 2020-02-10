@@ -28,11 +28,4 @@ No "id" is required when selecting series by series. See first example. When sel
 }
 \examples{
 list_series()
-list_series(1)
-list_series(1, by="series")
-list_series("1", by="series")
-list_series(c(91, 92, 100), by="series")
-list_series(c(244, 216, 206, 189), by="agencies")
-list_series(c(38, 10), by="jurisdictions")
-list_series(1, by="topic")
 }

@@ -9,7 +9,12 @@
 #' list_topics()
 #' list_topics(1)
 list_topics <- function(topicID = NA) {
+
+    print(R.cache::loadCache(key = list(c("industryID","jurisdiction","industryCode",
+                                "industryName","industryDescription",
+                                "industryCodeVersion","industryCodeStandard"))))
     json <- regdata_json_request("topics", topicID)
+
     if (length(json) > 0) {
         topic_text <- paste0(json$topicName, " (ID: ", json$topicID, ")")
     } else {
@@ -86,45 +91,49 @@ list_agencies <- function(jurisdictionIDs = NULL) {
 #' @export
 #' @examples
 #' list_series()
-#' list_series(1)
-#' list_series(1, by="series")
-#' list_series("1", by="series")
-#' list_series(c(91, 92, 100), by="series")
-#' list_series(c(244, 216, 206, 189), by="agencies")
-#' list_series(c(38, 10), by="jurisdictions")
-#' list_series(1, by="topic")
+
 list_series <- function(id = NA, by = c("all", "series", "agencies", "industries", "jurisdictions", "topics")) {
+
     by <- match.arg(by)
 
     ## check length of id argument to make it sure it is compatible with selected series filter (write error messages later)
     id_len <- length(id)
 
     if (by == "all") {
+
         url <- regdata_json_requestURL("series", id)
         json <- regdata_json_request("series", id)
+
     } else if (by == "series") {
-        if(is.na(id))
+
+        if (is.na(id))
             stop("You must provide the series in the 'id' parameter.")
+
         # more than one seriesCode can be passed, so collapse into comma-separated list
-        idstr <- paste(id, collapse=",")
-        url <- regdata_json_requestURL(paste0("series/seriesCode?series=", idstr), id=NA)
-        json <- regdata_json_request(paste0("series/seriesCode?series=", idstr), id=NA)
+        idstr <- paste(id, collapse = ",")
+
+        url <- regdata_json_requestURL(paste0("series/seriesCode?series=", idstr), id = NA)
+
+        json <- regdata_json_request(paste0("series/seriesCode?series=", idstr), id = NA)
+
     } else if (by == "agencies") {
-        if(is.na(id))
+
+        if (is.na(id))
             stop("You must provide the agency in the 'id' parameter.")
         # more than one agency can be passed, so collapse into comma-separated list
-        idstr <- paste(id, collapse=",")
-        url <- regdata_json_requestURL(paste0("series/agencies?agencies=", idstr), id=NA)
-        json <- regdata_json_request(paste0("series/agencies?agencies=", idstr), id=NA)
+        idstr <- paste(id, collapse = ",")
+        url <- regdata_json_requestURL(paste0("series/agencies?agencies=", idstr), id = NA)
+        json <- regdata_json_request(paste0("series/agencies?agencies=", idstr), id = NA)
+
     } else if (by == "jurisdictions") {
         # more than one geoCode can be passed, so collapse into comma-separated list
-        if(is.na(id))
+        if (is.na(id))
             stop("You must provide jurisdiction in the 'id' parameter.")
-        idstr <- paste(id, collapse=",")
-        url <- regdata_json_requestURL(paste0("series/jurisdiction?jurisdictions=", idstr), id=NA)
-        json <- regdata_json_request(paste0("series/jurisdiction?jurisdictions=", idstr), id=NA)
+        idstr <- paste(id, collapse = ",")
+        url <- regdata_json_requestURL(paste0("series/jurisdiction?jurisdictions=", idstr), id = NA)
+        json <- regdata_json_request(paste0("series/jurisdiction?jurisdictions=", idstr), id = NA)
     } else {
-        if(is.na(id))
+        if (is.na(id))
             stop("You must provide the topic in the 'id' parameter.")
         url <- regdata_json_requestURL("series/topics", id)
         json <- regdata_json_request("series/topics", id)
@@ -152,17 +161,19 @@ list_series <- function(id = NA, by = c("all", "series", "agencies", "industries
 #' \item Geo Code
 #' }
 #'
-#' @param jurisdictionID An integer. Only one jurisdiction value may be passed as an argument.
+#' @param jurisdiction An integer. Only one jurisdiction value may be passed as an argument.
 #' @return List of series with information for each series regarding start year, end years, and total years available, by jurisdiction
 #' @export
 #' @examples
-#' list_seriesyear()
-#' list_seriesyear(4)
-list_seriesyear <- function(jurisdictionID = NA) {
-    if (is.na(jurisdictionID)) {
-        json <- regdata_json_request("jurisdictions/available", NA)
+#' list_seriesyear(10)
+list_seriesyear <- function(jurisdiction = NA) {
+
+    if (!is.na(jurisdiction)) {
+        jur_str <- paste0(jurisdiction, collapse = ",")
+        json <- regdata_json_request(paste0("periods/?jurisdictionID=", jur_str), NA)
+
     } else {
-        json <- regdata_json_request(paste0("jurisdictions/", jurisdictionID, "/available"), NA)
+        stop("Jurisdiction required.")
     }
 
     if (length(json) > 0) {
@@ -190,11 +201,13 @@ list_seriesyear <- function(jurisdictionID = NA) {
 #' @export
 #'
 #' @examples
+#' list_document_types()
 list_document_types <- function(){
-        json <- regdata_json_request("documenttypes")
+        json <- regdata_json_request("documenttypes", NA)
 
         if (length(json) > 0) {
             document_text <- paste0(json$subtypeName, " (ID: ", json$documentSubtypeID, ")")
+            json <- regdata_json_request("documenttypes", NA)
         } else {
             document_text <- "No document found"
         }

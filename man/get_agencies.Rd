@@ -4,10 +4,10 @@
 \alias{get_agencies}
 \title{Return a dataframe of all agencies in a jurisdiction}
 \usage{
-get_agencies(jurisdictionIDs = NULL)
+get_agencies(jurisdiction = NA)
 }
 \arguments{
-\item{jurisdictionIDs}{An integer}
+\item{jurisdiction}{Integer - the IDs of the jurisdiction of interest}
 }
 \value{
 dataframe

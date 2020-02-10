@@ -4,10 +4,13 @@
 \alias{get_industries}
 \title{Return a list of industries with data in RegCensus}
 \usage{
-get_industries(jurisdictionID = NA)
+get_industries(jurisdiction = NA)
 }
 \arguments{
-\item{jurisdictionID}{An integer, the jurisdiction ID}
+\item{jurisdiction}{An integer, the jurisdiction ID}
+}
+\value{
+data frame with industries
 }
 \description{
 Return a list of industries with data in RegCensus

@@ -4,10 +4,10 @@
 \alias{list_seriesyear}
 \title{Generate a list of Start Years, End Years, and Total Years Available for Series by Jurisdiction in RegData.}
 \usage{
-list_seriesyear(jurisdictionID = NA)
+list_seriesyear(jurisdiction = NA)
 }
 \arguments{
-\item{jurisdictionID}{An integer. Only one jurisdiction value may be passed as an argument.}
+\item{jurisdiction}{An integer. Only one jurisdiction value may be passed as an argument.}
 }
 \value{
 List of series with information for each series regarding start year, end years, and total years available, by jurisdiction
@@ -25,6 +25,5 @@ Each item in the list returns:
 }
 }
 \examples{
-list_seriesyear()
-list_seriesyear(4)
+list_seriesyear(10)
 }

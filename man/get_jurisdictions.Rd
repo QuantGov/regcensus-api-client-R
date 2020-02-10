@@ -7,7 +7,7 @@
 get_jurisdictions(jurisdiction = NA)
 }
 \arguments{
-\item{jurisdiction}{An integer.}
+\item{jurisdiction}{Integer - the ID of the jurisdiction of interest}
 }
 \value{
 List of jurisdictions
@@ -17,5 +17,5 @@ Generate a list of jurisdictions in RegData
 }
 \examples{
 get_jurisdictions()
-get_jurisdictions(1)
+get_jurisdictions(38)
 }

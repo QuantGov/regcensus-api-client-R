@@ -6,19 +6,21 @@
 national and sub-national (for example, state/province) within the jurisdiction.}
 \usage{
 get_country_values(jurisdiction = c(38, 75), series = c(1, 2),
-  years = c(2010, 2011), industries = NA, dateIsRange = TRUE,
+  time = c(2010, 2011), industries = NA, date_is_range = TRUE,
   filtered = TRUE)
 }
 \arguments{
-\item{jurisdiction}{Jurisdiction IDs for the data}
+\item{jurisdiction}{Integer - Jurisdiction IDs for the data}
 
-\item{series}{Series IDs}
+\item{series}{Integer - Series IDs}
 
-\item{years}{Integers for years}
+\item{time}{Date string - For period of interest}
 
-\item{dateIsRange}{A boolean to indicate if the years values is range instead of just single values}
+\item{industries}{Text - List of industries to pull data for using the jurisdiction specific coding system}
 
-\item{filtered}{A boolean}
+\item{date_is_range}{Boolean - Indicate if the years values is range instead of just single values}
+
+\item{filtered}{Boolean - Indicate whether to return filtered data, i.e., the industry-relevant data with poorly classified industries excluded}
 }
 \value{
 dataframe
@@ -26,8 +28,4 @@ dataframe
 \description{
 Return values for a list of jurisdictions-series-year combination. It will return data for both
 national and sub-national (for example, state/province) within the jurisdiction.
-}
-\examples{
-get_country_series(jurisdiction=c(38), series=(1,2), years=c(2010,2011))
-get_country_series(jurisdiction=c(38), series=(1,2), years=c(2010,2011), industries=c('111','521'))
 }

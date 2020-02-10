@@ -8,9 +8,9 @@ get_series(id = NA, by = c("all", "series", "agencies", "industries",
   "jurisdictions", "topics"))
 }
 \arguments{
-\item{id}{An integer, id for the by parameter}
+\item{id}{Integer - ID for the by parameter}
 
-\item{by}{}
+\item{by}{Text - one of all, series, agencies, industries, jurisdictions, topics}
 }
 \value{
 dataframe
@@ -20,6 +20,5 @@ Return a dataframe with the series for the id specified
 }
 \examples{
 get_series(by='all')
-get_series(id=38, by = 'jurisdictions')
 get_series(id=91, by = 'series')
 }

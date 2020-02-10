@@ -3,3 +3,6 @@
 ^packrat/
 ^\.Rprofile$
 ^LICENSE\.md$
+^doc$
+^Meta$
+^README\.Rmd$

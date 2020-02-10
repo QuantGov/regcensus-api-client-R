@@ -4,11 +4,33 @@
 \alias{get_values}
 \title{Return dataframe with values of series of interest}
 \usage{
-get_values(jurisdiction, series, time, agency = NA, industry = NA,
-  dateIsRange = TRUE)
+get_values(jurisdiction, series, time = c(2015, 2019), summary = TRUE,
+  filtered = TRUE, documentType = 3, agency = 0, industry = "0",
+  date_is_range = TRUE, document = NA, include_metadata = FALSE)
 }
 \arguments{
-\item{dateIsRange}{}
+\item{jurisdiction}{Integer - the ID of the jurisdiction of interest}
+
+\item{series}{Series ID}
+
+\item{time}{The time}
+
+\item{summary}{Boolean - Return summary instead of document level data}
+
+\item{filtered}{Boolean - Exclude poorly-performing industry classification results}
+
+\item{documentType}{Integer - ID of document}
+
+\item{agency}{The agency ID}
+
+\item{industry}{The industry code using the jurisdiction-specific coding system}
+
+\item{date_is_range}{Boolean indicating whether the time parameter is range or should be treated as single data points}
+
+\item{document}{Integer - List of document IDs to return data for. Use when requesting document-level data instead of
+summary data.}
+
+\item{include_metadata}{Boolean - Should dataframe include the metadata to make it more readable}
 }
 \value{
 dataframe
@@ -17,6 +39,8 @@ dataframe
 Return dataframe with values of series of interest
 }
 \examples{
-get_values(jurisdiction = 38, series = c(92), time = c(1990,2000),
+get_values(jurisdiction = 38, series = c(92), time = c('1990','2000'),
 industry = c('111','33'), agency = c(66,111))
+get_values(jurisdiction = c(84,38), series=c(1,9,92),
+time = c('2018-01-10','2020-01-31'), date_is_range=TRUE)
 }

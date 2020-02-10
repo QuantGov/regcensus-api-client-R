@@ -4,10 +4,10 @@
 \alias{get_topics}
 \title{Return list of topics in RegCensus}
 \usage{
-get_topics(topicID = NA)
+get_topics(topic = NA)
 }
 \arguments{
-\item{topicID}{}
+\item{topic}{Integer - the ID of the topic of interest}
 }
 \value{
 dataframe
