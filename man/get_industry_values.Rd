@@ -4,17 +4,10 @@
 \alias{get_industry_values}
 \title{Return series values for a set of industry codes (using NAICS)}
 \usage{
-get_industry_values(
-  jurisdiction = c(38),
-  industry_type = c("2-Digit", "3-Digit", "4-Digit", "5-Digit", "6-Digit"),
-  series = c(1, 9),
-  time = c("2015", "2019"),
-  agency = c(0),
-  date_is_range = TRUE,
-  filtered_only = TRUE,
-  summary = TRUE,
-  document_type = 3
-)
+get_industry_values(jurisdiction = c(38), industry_type = c("2-Digit",
+  "3-Digit", "4-Digit", "5-Digit", "6-Digit"), series = c(1, 9),
+  time = c("2015", "2019"), agency = c(0), date_is_range = TRUE,
+  filtered_only = TRUE, summary = TRUE, document_type = 3)
 }
 \arguments{
 \item{jurisdiction}{An Integer - jurisdiction(s) of interest. Obtain list of jurisdictions from list_jurisdictions()}

@@ -2,17 +2,17 @@ Package: regcensusAPI
 Title: Retrieve Data from RegData API
 Version: 0.1.1
 Authors@R: 
-    person(given = "Kofi",
+    c(person(given = "Kofi",
            family = "Ampaabeng",
            role = c("aut", "cre"),
            email = "kampaabeng@mercatus.gmu.edu",
-           comment = c(ORCID = "0000-0001-5511-699X"))
+           comment = c(ORCID = "0000-0001-5511-699X")),
     person(given = "Michael",
           family = "Kotrous",
-          role = c("aut", "cre"),
+          role = c("aut", "cph"),
           email = "mkotrous@mercatus.gmu.edu",
-          comment = c(ORCID = "0000-0003-1957-5827"))  
-Description: This package provides convenient functions to download data from Mercatus Center's RegData.
+          comment = c(ORCID = "0000-0003-1957-5827")))  
+Description: Convenient functions to download data from the Mercatus Center at George Mason University's RegData.
   RegData quantifies the number of regulations that have been issued by a jurisdiction. Currently, there are data
   for US, Canada, and Australia. This package allows easy access to the data produced by RegData.
 License: MIT + file LICENSE
@@ -35,3 +35,4 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
+URL: https://api.quantgov.org

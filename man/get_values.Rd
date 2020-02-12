@@ -4,19 +4,9 @@
 \alias{get_values}
 \title{Return dataframe with values of series of interest}
 \usage{
-get_values(
-  jurisdiction,
-  series,
-  time = c(2015, 2019),
-  summary = TRUE,
-  filtered = TRUE,
-  documentType = 3,
-  agency = 0,
-  industry = "0",
-  date_is_range = TRUE,
-  document = NA,
-  include_metadata = FALSE
-)
+get_values(jurisdiction, series, time = c(2015, 2019), summary = TRUE,
+  filtered = TRUE, documentType = 3, agency = 0, industry = "0",
+  date_is_range = TRUE, document = NA, include_metadata = FALSE)
 }
 \arguments{
 \item{jurisdiction}{Integer - the ID of the jurisdiction of interest}
@@ -51,6 +41,4 @@ Return dataframe with values of series of interest
 \examples{
 get_values(jurisdiction = 38, series = c(92), time = c('1990','2000'),
 industry = c('111','33'), agency = c(66,111))
-get_values(jurisdiction = c(84,38), series=c(1,9,92),
-time = c('2018-01-10','2020-01-31'), date_is_range=TRUE)
 }
