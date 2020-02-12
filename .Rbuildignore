@@ -7,3 +7,4 @@
 ^Meta$
 ^README\.Rmd$
 ^revdep$
+^cran-comments\.md$
