@@ -18,5 +18,5 @@ data frame
 Title Return the list of documents for a series-jurisdiction combination
 }
 \examples{
-get_documents(38,3)
+get_documents(55,3)
 }

@@ -286,7 +286,10 @@ get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
     }
 
     if (date_is_range == FALSE)
-        url_compose <- paste0(url_compose,"&dateIsRange=", date_is_range)
+        url_compose <- paste0(url_compose,"&dateIsRange=", "false")
+    else{
+      url_compose <- paste0(url_compose,"&dateIsRange=", "true")
+    }
 
     if (filtered == FALSE)
       url_compose <- paste0(url_compose,"&filteredOnly=",filtered)
@@ -306,7 +309,7 @@ get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
 #' @export
 #'
 #' @examples
-#' get_documents(38,3)
+#' get_documents(55,3)
 get_documents <- function(jurisdiction, document_type=3){
   print("Document-level data could take a while to download. Please be patient.")
   if (!is.null(jurisdiction)) {

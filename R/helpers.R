@@ -133,7 +133,6 @@ find_jurisdiction <- function(name=NA){
         stop("Invalid names specified.")
 
 
-
     #find jurisdiction IDs by name
     jurs <- get_jurisdictions()
 

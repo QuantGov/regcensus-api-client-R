@@ -9,9 +9,10 @@
 
 The goal of regcensusAPI is to provide an easy way for researchers to
 access regulatory restrictions data from the Mercatus Center at George
-Mason University, RegData. RegData seeks to quantify the volume of
-regulatory restrictions in various jurisdictions. See more about RegData
-from the [QuantGov](https://www.quantgov.org) website.
+Mason University, RegData. RegData quantifies the volume of regulatory
+restrictions in various jurisdictions, from national to subnational. For
+more information about RegData, visit
+[QuantGov](https://www.quantgov.org) website.
 
 ## Installation
 
@@ -37,17 +38,18 @@ covered.
 ``` r
 library(regcensusAPI)
 #> Welcome to RegCensus API - Pulling initial data
-#> Registered S3 method overwritten by 'R.oo':
-#>   method        from       
-#>   throw.default R.methodsS3
-#> API call: https://api.quantgov.org/periods/available
-#> API call to https://api.quantgov.org/periods/available complete.
-#> API call: https://api.quantgov.org/industries?jurisdiction=38
-#> API call to https://api.quantgov.org/industries?jurisdiction=38 complete.
 ## basic example code
 get_topics()
-#> API call: https://api.quantgov.org/topics/NA
-#> URL is not correctly formed: https://api.quantgov.org/topics/NA
-#> Original error message:
-#> API call to https://api.quantgov.org/topics/NA complete.
 ```
+
+All data are further grouped into *series*. The function
+**get\_series\_period()** returns the list of data series, the
+jurisdictions, and the periods for which data are available.
+
+``` r
+get_series_period()
+```
+
+For more information on how to fully utilize regcensusAPI to obtain
+regulatory restrictions data, check out the vignette accompanying the
+package.

@@ -1,6 +1,6 @@
 .onLoad <- function(libname,pkgname){
 
-  packageStartupMessage("Welcome to RegCensus API - Pulling initial data")
+  #packageStartupMessage("Welcome to RegCensus API - Pulling initial data")
   R.cache::saveCache(object = get_series_period(),
                      key = list(c("seresYearID","summary",
                                   "periodStartDate","periodEndDate",
