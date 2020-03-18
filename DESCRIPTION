@@ -12,8 +12,8 @@ Authors@R:
           role = c("aut", "cph"),
           email = "mkotrous@mercatus.gmu.edu",
           comment = c(ORCID = "0000-0003-1957-5827")))  
-Description: Convenient functions to download data from the `Mercatus Center at George Mason University's RegData`.
-  `RegData` quantifies the number of regulations that have been issued by a jurisdiction. Currently, there are data
+Description: Download data from the Mercatus Center at George Mason University's 'RegData.'
+  'RegData' quantifies the number of regulations that have been issued by a jurisdiction. Currently, there are data
   for US, Canada, and Australia. This package allows easy access to the data produced by RegData.
 License: MIT + file LICENSE
 Imports:
