@@ -186,8 +186,11 @@ get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
 
 
     series_str <- paste(series, collapse = ",")
+
     time_str <- paste(time, collapse = ",")
+
     industry_str <- paste(industry,collapse = ",")
+
     agency_str <- paste(agency,collapse = ",")
 
     if (length(series) > 0) {
@@ -226,12 +229,13 @@ get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
 
     if (date_is_range) {
         url_compose <- paste0(url_compose,"&dateIsRange=", date_is_range)
-
     }
+
     if (filtered) {
       url_compose <- paste0(url_compose,"&filteredOnly=","true")
     }
 
+    url_compose <- paste0(url_compose,"&documentType=",documentType)
 
     return(make_api_call(url_compose))
 }
