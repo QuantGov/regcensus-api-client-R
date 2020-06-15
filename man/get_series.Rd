@@ -4,13 +4,10 @@
 \alias{get_series}
 \title{Return a dataframe with the series for the id specified}
 \usage{
-get_series(id = NA, by = c("all", "series", "agencies", "industries",
-  "jurisdictions", "topics"))
+get_series(id = NA)
 }
 \arguments{
 \item{id}{Integer - ID for the by parameter}
-
-\item{by}{Text - one of all, series, agencies, industries, jurisdictions, topics}
 }
 \value{
 dataframe
@@ -19,6 +16,5 @@ dataframe
 Return a dataframe with the series for the id specified
 }
 \examples{
-get_series(by='all')
-get_series(id=91, by = 'series')
+get_series(bidy=1)
 }

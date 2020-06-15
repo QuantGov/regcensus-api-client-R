@@ -94,39 +94,20 @@ get_agencies <- function(jurisdiction = NA) {
 #' Return a dataframe with the series for the id specified
 #'
 #' @param id Integer - ID for the by parameter
-#' @param by Text - one of all, series, agencies, industries, jurisdictions, topics
-#'
 #'
 #' @return dataframe
 #' @export
 #'
 #' @examples
-#' get_series(by='all')
-#' get_series(id=91, by = 'series')
-get_series <- function(id = NA, by = c("all","series", "agencies",
-                                       "industries", "jurisdictions", "topics")) {
-    by <- match.arg(by)
+#' get_series(bidy=1)
+get_series <- function(id = NA) {
+  if(is.na(id)){
+    url_compose <- paste0(get_baseURL(),"/series")
+  } else {
+    url_compose <- paste0(get_baseURL(),"/series/",id)
+  }
 
-    if (by == "all") {
-        json <- regdata_json_request("series", id)
-    } else if (by == "series") {
-        # more than one seriesCode can be passed, so collapse into comma-separated list
-        idstr <- paste(id, collapse = ",")
-        json <- regdata_json_request(paste0("series/seriesCode?series=", idstr), id = NA)
-    } else if (by == "agencies") {
-        # more than one agency can be passed, so collapse into comma-separated list
-        idstr <- paste(id, collapse = ",")
-        json <- regdata_json_request(paste0("series/agencies?agencies=", idstr), id = NA)
-    } else if (by == "jurisdictions") {
-        # more than one geoCode can be passed, so collapse into comma-separated list
-        idstr <- paste(id, collapse = ",")
-        json <- regdata_json_request(paste0("series/jurisdiction?jurisdictions=", idstr), id = NA)
-    } else {
-        json <- regdata_json_request("series/topics", id)
-    }
-
-
-    return(json)
+  return(make_api_call(url_compose))
 }
 
 #' Return dataframe with all jurisdictions-series-years of data available
@@ -237,7 +218,7 @@ get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
 
     url_compose <- paste0(url_compose,"&documentType=",documentType)
 
-    return(make_api_call(url_compose))
+    return(make_api_call(url_compose, TRUE))
 }
 
 #' Return values for a list of jurisdictions-series-year combination. It will return data for both
