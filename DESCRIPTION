@@ -1,4 +1,4 @@
-Package: regcensusAPI
+Package: regcensusAPITest
 Title: Retrieve Data from RegData API
 Version: 0.1.2.1
 Authors@R: 

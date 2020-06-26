@@ -20,7 +20,7 @@ clean_column_names <- function(json){
 #' get_baseURL()
 
 get_baseURL <- function() {
-    return("https://api.quantgov.org")
+    return("http://ec2-18-214-181-163.compute-1.amazonaws.com")
 }
 
 ## Generate API call from controller and requested ID
