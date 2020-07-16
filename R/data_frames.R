@@ -203,7 +203,7 @@ get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
     }
 
     if (length(time) > 0) {
-        url_compose <- paste0(url_compose,"&time=",time_str)
+        url_compose <- paste0(url_compose,"&time=",time_str,"&date=",time_str)
     }else{
         stop("Time is required.")
     }
@@ -216,6 +216,11 @@ get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
       url_compose <- paste0(url_compose,"&filteredOnly=","true")
     }
 
+    if(summary){
+      url_compose <- paste0(url_compose,"&summary=","true")
+    } else {
+      url_compose <- paste0(url_compose,"&summary=","false")
+    }
     url_compose <- paste0(url_compose,"&documentType=",documentType)
 
     return(make_api_call(url_compose, TRUE))
