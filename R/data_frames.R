@@ -1,7 +1,6 @@
 # RETURN DATA FRAMES FROM USER REQUESTS
 
 
-
 #' Return list of topics in RegCensus
 #'
 #' @param topic Integer - the ID of the topic of interest
@@ -12,17 +11,17 @@
 #' @examples
 #' get_topics(1)
 #' get_topics()
+
 get_topics <- function(topic = NA) {
 
   #load all topics
   if (!is.na(topic))
-    url_compose <- paste0(get_baseURL(),"/topics",paste0(topic,collapse = ","))
+    url_compose <- paste0(get_baseURL(), "/topics", paste0(topic, collapse = ","))
   else
-    url_compose <- paste0(get_baseURL(),"/topics")
+    url_compose <- paste0(get_baseURL(), "/topics")
 
   return(make_api_call(url_compose))
 }
-
 
 
 #' Generate a list of jurisdictions in RegData
@@ -37,14 +36,14 @@ get_topics <- function(topic = NA) {
 
 get_jurisdictions <- function(jurisdiction = NA) {
   if (!is.na(jurisdiction)) {
-    url_compose <- paste0(get_baseURL(),"/jurisdictions", jurisdiction)
+    url_compose <- paste0(get_baseURL(), "/jurisdictions", jurisdiction)
   }
-    else {
-      url_compose <- paste0(get_baseURL(),"/jurisdictions")
+  else {
+    url_compose <- paste0(get_baseURL(), "/jurisdictions")
 
-    }
+  }
 
-    return(make_api_call(url_compose))
+  return(make_api_call(url_compose))
 }
 
 #' Return a list of industries with data in RegCensus
@@ -56,15 +55,16 @@ get_jurisdictions <- function(jurisdiction = NA) {
 #'
 #' @examples
 #' get_industries(38)
-get_industries <- function(jurisdiction=NA){
 
-    if (is.na(jurisdiction)) {
-        print("You must specify a jurisdiction. Select from: ")
-        print(list_jurisdictions())
-        stop()
-    }
+get_industries <- function(jurisdiction = NA) {
 
-  url_compose <- paste0(get_baseURL(),"/industries?jurisdiction=",jurisdiction)
+  if (is.na(jurisdiction)) {
+    print("You must specify a jurisdiction. Select from: ")
+    print(list_jurisdictions())
+    stop()
+  }
+
+  url_compose <- paste0(get_baseURL(), "/industries?jurisdiction=", jurisdiction)
 
 
   return(make_api_call(url_compose))
@@ -79,16 +79,17 @@ get_industries <- function(jurisdiction=NA){
 #'
 #' @examples
 #' get_agencies(38)
+
 get_agencies <- function(jurisdiction = NA) {
-    if (!is.na(jurisdiction)) {
-        id_str <- paste(jurisdiction, collapse = ",")
-        url_compose <- paste0(get_baseURL(),"/agencies/jurisdiction?jurisdictions=",id_str)
-      } else {
-      url_compose <- paste0(get_baseURL(),"/agencies")
-    }
+  if (!is.na(jurisdiction)) {
+    id_str <- paste(jurisdiction, collapse = ",")
+    url_compose <- paste0(get_baseURL(), "/agencies/jurisdiction?jurisdictions=", id_str)
+  } else {
+    url_compose <- paste0(get_baseURL(), "/agencies")
+  }
 
 
-    return(make_api_call(url_compose))
+  return(make_api_call(url_compose))
 }
 
 #' Return a dataframe with the series for the id specified
@@ -100,11 +101,12 @@ get_agencies <- function(jurisdiction = NA) {
 #'
 #' @examples
 #' get_series(bidy=1)
+
 get_series <- function(id = NA) {
-  if(is.na(id)){
-    url_compose <- paste0(get_baseURL(),"/series")
+  if (is.na(id)) {
+    url_compose <- paste0(get_baseURL(), "/series")
   } else {
-    url_compose <- paste0(get_baseURL(),"/series/",id)
+    url_compose <- paste0(get_baseURL(), "/series/", id)
   }
 
   return(make_api_call(url_compose))
@@ -120,18 +122,19 @@ get_series <- function(id = NA) {
 #' @examples
 #' get_series_period()
 #' get_series_period(38)
-get_series_period <- function(jurisdiction=NA) {
+
+get_series_period <- function(jurisdiction = NA) {
 
   #if empty jurisdiction, return data for all
-    if (!is.na(jurisdiction)) {
-      jur_str <- paste0(find_jurisdiction(jurisdiction), collapse = ",")
-      url_compose <- paste0(get_baseURL(),"/periods","?jurisdiction=",jur_str)
-    } else {
-      url_compose <- paste0(get_baseURL(),"/periods/available")
-    }
+  if (!is.na(jurisdiction)) {
+    jur_str <- paste0(find_jurisdiction(jurisdiction), collapse = ",")
+    url_compose <- paste0(get_baseURL(), "/periods", "?jurisdiction=", jur_str)
+  } else {
+    url_compose <- paste0(get_baseURL(), "/periods/available")
+  }
 
 
-    return(make_api_call(url_compose))
+  return(make_api_call(url_compose))
 }
 
 
@@ -157,68 +160,68 @@ get_series_period <- function(jurisdiction=NA) {
 #' get_values(jurisdiction = 38, series = c(92), time = c('1990','2000'),
 #' industry = c('111','33'), agency = c(66,111))
 
-get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
-                       filtered=TRUE, documentType=3, agency=0, industry='0',
-                       date_is_range = TRUE, document=NA, include_metadata=FALSE) {
+get_values <- function(jurisdiction, series, time = c(2015, 2019), summary = TRUE,
+                       filtered = TRUE, document_type = 3, agency = 0, industry = '0',
+                       date_is_range = TRUE, document = NA, include_metadata = FALSE) {
 
-    if (!summary) {
-      print("Request for document-level data could take a while to download. Please be patient.")
-    }
+  if (!summary) {
+    print("Request for document-level data could take a while to download. Please be patient.")
+  }
 
 
-    series_str <- paste(series, collapse = ",")
+  series_str <- paste(series, collapse = ",")
 
-    time_str <- paste(time, collapse = ",")
+  time_str <- paste(time, collapse = ",")
 
-    industry_str <- paste(industry,collapse = ",")
+  industry_str <- paste(industry, collapse = ",")
 
-    agency_str <- paste(agency,collapse = ",")
+  agency_str <- paste(agency, collapse = ",")
 
-    if (length(series) > 0) {
-        url_compose <- paste0(get_baseURL(),"/values?series=",series_str)
-    }else
+  if (length(series) > 0) {
+    url_compose <- paste0(get_baseURL(), "/values?series=", series_str)
+  }else
     {
-        print("Valid series ID required. Select from the following list:")
-        print(list_series())
-        stop("Processing terminated.")
+    print("Valid series ID required. Select from the following list:")
+    print(list_series())
+    stop("Processing terminated.")
 
-    }
-    if (length(jurisdiction) > 0) {
-      if (!is.numeric(jurisdiction[1])) {
-        jur_str <- paste(find_jurisdiction(jurisdiction),collapse = ",")
-      }else{
-        jur_str <- paste(jurisdiction, collapse = ",")
-      }
-
-      url_compose <- paste0(url_compose,"&jurisdiction=",jur_str)
-    }else
-        stop("Jurisdiction is required.")
-
-    if (length(agency) > 0) {
-        url_compose <- paste0(url_compose,"&agency=",agency_str)
+  }
+  if (length(jurisdiction) > 0) {
+    if (!is.numeric(jurisdiction[1])) {
+      jur_str <- paste(find_jurisdiction(jurisdiction), collapse = ",")
+    }else {
+      jur_str <- paste(jurisdiction, collapse = ",")
     }
 
-    if (length(industry) > 0) {
-        url_compose <- paste0(url_compose,"&industry=",industry_str)
-    }
+    url_compose <- paste0(url_compose, "&jurisdiction=", jur_str)
+  }else
+    stop("Jurisdiction is required.")
 
-    if (length(time) > 0) {
-        url_compose <- paste0(url_compose,"&time=",time_str)
-    }else{
-        stop("Time is required.")
-    }
+  if (length(agency) > 0) {
+    url_compose <- paste0(url_compose, "&agency=", agency_str)
+  }
 
-    if (date_is_range) {
-        url_compose <- paste0(url_compose,"&dateIsRange=", date_is_range)
-    }
+  if (length(industry) > 0) {
+    url_compose <- paste0(url_compose, "&industry=", industry_str)
+  }
 
-    if (filtered) {
-      url_compose <- paste0(url_compose,"&filteredOnly=","true")
-    }
+  if (length(time) > 0) {
+    url_compose <- paste0(url_compose, "&time=", time_str)
+  }else {
+    stop("Time is required.")
+  }
 
-    url_compose <- paste0(url_compose,"&documentType=",documentType)
+  if (date_is_range) {
+    url_compose <- paste0(url_compose, "&dateIsRange=", date_is_range)
+  }
 
-    return(make_api_call(url_compose, TRUE))
+  if (filtered) {
+    url_compose <- paste0(url_compose, "&filteredOnly=", "true")
+  }
+
+  url_compose <- paste0(url_compose, "&documentType=", document_type)
+
+  return(make_api_call(url_compose, TRUE))
 }
 
 #' Return values for a list of jurisdictions-series-year combination. It will return data for both
@@ -234,51 +237,62 @@ get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
 #' @return dataframe
 #' @export
 #'
-get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
-                             time = c(2010,2011), industries = NA,
-                             date_is_range=TRUE, filtered=TRUE){
-    if (length(time) == 0) {
-      stop("You need to include valid time period")
-    }else
-        time_str <- paste0(time, collapse = ",")
 
-    if (length(jurisdiction) == 0) {
-        print("You need to select at least one of the following jurisdiction IDs")
-        print(list_jurisdictions())
-        stop()
-    }else{
-        jurisdiction_str <- paste0(jurisdiction, collapse = ",")
-        url_compose <- paste0(get_baseURL(),"/values/country?countries=",jurisdiction_str,"&years=",time_str)
+get_country_values <- function(jurisdiction = c(38, 75), series = c(1, 2),
+                               date = c(2010, 2011), industries = '0', document_type = 3,
+                               date_is_range = TRUE, filtered = TRUE) {
+  if (length(date) == 0) {
+    stop("You need to include valid time period")
+  }else
+    time_str <- paste0(date, collapse = ",")
+
+  if (length(jurisdiction) == 0) {
+    print("You need to select at least one of the following jurisdiction IDs")
+    print(list_jurisdictions())
+    stop()
+  }else {
+    if (!is.numeric(jurisdiction[1])) {
+      jur_str <- paste(find_country(jurisdiction), collapse = ",")
+    }else {
+      jur_str <- paste(jurisdiction, collapse = ",")
     }
 
-    if (length(series) == 0) {
-        print("You need to select at least one of the following series IDs")
-        print(list_series())
-        stop()
+    url_compose <- paste0(get_baseURL(), "/values/country?countries=", jur_str, "&date=", time_str)
+  }
 
-    }else{
-        series_str <- paste0(series, collapse = ",")
-        url_compose <- paste0(url_compose, "&series=",series_str)
-    }
+  if (length(document_type) == 0) {
+    stop("You need to specify a document type")
+  } else {
+    url_compose <- paste0(url_compose, "&documentType=", document_type)
+  }
+  if (length(series) == 0) {
+    print("You need to select at least one of the following series IDs")
+    print(list_series())
+    stop()
 
-    if (length(industries) == 0) {
-        industries_str <- '0'
-    }else{
-      industries_str <- paste0(industries, collapse = ",")
-        url_compose <- paste0(url_compose, "&industries=",industries_str)
-    }
+  }else {
+    series_str <- paste0(series, collapse = ",")
+    url_compose <- paste0(url_compose, "&series=", series_str)
+  }
 
-    if (date_is_range == FALSE)
-        url_compose <- paste0(url_compose,"&dateIsRange=", "false")
-    else{
-      url_compose <- paste0(url_compose,"&dateIsRange=", "true")
-    }
+  if (length(industries) == 0) {
+    industries_str <- '0'
+  }else {
+    industries_str <- paste0(industries, collapse = ",")
+    url_compose <- paste0(url_compose, "&industries=", industries_str)
+  }
 
-    if (filtered == FALSE)
-      url_compose <- paste0(url_compose,"&filteredOnly=",filtered)
+  if (date_is_range == FALSE)
+    url_compose <- paste0(url_compose, "&dateIsRange=", "false")
+  else {
+    url_compose <- paste0(url_compose, "&dateIsRange=", "true")
+  }
+
+  if (filtered == FALSE)
+    url_compose <- paste0(url_compose, "&filteredOnly=", filtered)
 
 
-    return(make_api_call(url_compose))
+  return(make_api_call(url_compose))
 
 }
 
@@ -293,12 +307,13 @@ get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
 #'
 #' @examples
 #' get_documents(55,3)
-get_documents <- function(jurisdiction, document_type=3){
+
+get_documents <- function(jurisdiction, document_type = 3) {
   print("Document-level data could take a while to download. Please be patient.")
   if (!is.null(jurisdiction)) {
     jur_str <- paste(jurisdiction, collapse = ",")
-    url_compose <- paste0(get_baseURL(),"/documents?jurisdiction=", jur_str)
-  }else{
+    url_compose <- paste0(get_baseURL(), "/documents?jurisdiction=", jur_str)
+  }else {
 
     print("Please select jurisdictions from the list below:")
     list_jurisdictions()
@@ -307,7 +322,7 @@ get_documents <- function(jurisdiction, document_type=3){
   }
 
   if (length(document_type) > 0) {
-    url_compose <- paste0(url_compose, "&documentType=",document_type)
+    url_compose <- paste0(url_compose, "&documentType=", document_type)
   }
   else {
     print("Document type (documentType) is required. Select a document type from the list below:")
@@ -316,11 +331,11 @@ get_documents <- function(jurisdiction, document_type=3){
   }
 
 
-   documents <- make_api_call(url_compose)
-   if (length(documents) > 0) {
-     return (documents)
-  }else{
-    stop(paste0("No data found.",url_compose))
+  documents <- make_api_call(url_compose)
+  if (length(documents) > 0) {
+    return(documents)
+  }else {
+    stop(paste0("No data found.", url_compose))
   }
 
 }
@@ -335,13 +350,14 @@ get_documents <- function(jurisdiction, document_type=3){
 #' @examples
 #' get_document_types(38)
 #' get_document_types()
-get_document_types <- function(jurisdiction=NA){
+
+get_document_types <- function(jurisdiction = NA) {
 
   if (!is.na(jurisdiction)) {
     id_str <- paste(jurisdiction, collapse = ",")
-    url_compose <- paste0(get_baseURL(),"/documenttypes?jurisdictions=",id_str)
+    url_compose <- paste0(get_baseURL(), "/documenttypes?jurisdictions=", id_str)
   } else {
-    url_compose <- paste0(get_baseURL(),"/documenttypes")
+    url_compose <- paste0(get_baseURL(), "/documenttypes")
   }
 
 
@@ -366,35 +382,35 @@ get_document_types <- function(jurisdiction=NA){
 #' @export
 #'
 
-get_industry_values <- function(jurisdiction=c(38),
-                                industry_type=c("2-Digit","3-Digit",
-                                               "4-Digit","5-Digit","6-Digit"),
-                                series=c(1,9),
-                                time=c('2015','2019'),
-                                agency=c(0),
-                                date_is_range=TRUE,
-                                filtered_only=TRUE,
-                                summary=TRUE,
-                                document_type=3) {
+get_industry_values <- function(jurisdiction = c(38),
+                                industry_type = c("2-Digit", "3-Digit",
+                                                  "4-Digit", "5-Digit", "6-Digit"),
+                                series = c(1, 9),
+                                time = c('2015', '2019'),
+                                agency = c(0),
+                                date_is_range = TRUE,
+                                filtered_only = TRUE,
+                                summary = TRUE,
+                                document_type = 3) {
   #list of industry options
-  industry_types = c("all","2-Digit","3-Digit","4-Digit","5-Digit","6-Digit")
+  industry_types = c("all", "2-Digit", "3-Digit", "4-Digit", "5-Digit", "6-Digit")
 
   #parse parameters
   series_str <- paste(series, collapse = ",")
   time_str <- paste(time, collapse = ",")
-  industry_str <- paste(industry_type,collapse = ",")
-  agency_str <- paste(agency,collapse = ",")
-  document_type_str = paste(document_type,collapse = ",")
+  industry_str <- paste(industry_type, collapse = ",")
+  agency_str <- paste(agency, collapse = ",")
+  document_type_str = paste(document_type, collapse = ",")
 
   #if names are used, find the corresponding jurisdiction IDs
   if (length(jurisdiction) > 0) {
     if (!is.numeric(jurisdiction[1])) {
-      jur_str <- paste(find_jurisdiction(jurisdiction),collapse = ",")
+      jur_str <- paste(find_jurisdiction(jurisdiction), collapse = ",")
     }else {
       jur_str <- paste(jurisdiction, collapse = ",")
     }
-    url_compose <- paste0(get_baseURL(),"/values/industryTypes?jurisdictions=",jur_str)
-  }else{
+    url_compose <- paste0(get_baseURL(), "/values/industryTypes?jurisdictions=", jur_str)
+  }else {
     print("Jurisdiction is required. Select valid jurisdiction IDs from the following:")
     print(list_jurisdictions())
     stop("Invalid jurisdiction specified.")
@@ -402,8 +418,8 @@ get_industry_values <- function(jurisdiction=c(38),
 
   #ensure correct industry type is selected
   if (length(industry_type) > 0) {
-    url_compose <- paste0(url_compose,"&industryType=",industry_type)
-  }else{
+    url_compose <- paste0(url_compose, "&industryType=", industry_type)
+  }else {
     print("Provide valid industry code type.")
     print(paste("Select valid industryType from :", industry_types))
     stop("Invalid industry type specified.")
@@ -412,8 +428,8 @@ get_industry_values <- function(jurisdiction=c(38),
 
   #ensure correct series IDs are selected
   if (length(series) > 0) {
-    url_compose <- paste0(url_compose,"&series=",series_str)
-  }else{
+    url_compose <- paste0(url_compose, "&series=", series_str)
+  }else {
     print("Provide valid series id. Select valid series IDs from the following:")
     print(get_series(by = "all"))
     stop("Invalid series ID specified.")
@@ -421,34 +437,34 @@ get_industry_values <- function(jurisdiction=c(38),
 
   #ensure the correct dates are selected
   if (length(date) > 0) {
-    url_compose <- paste0(url_compose,"&date=",time_str)
+    url_compose <- paste0(url_compose, "&date=", time_str)
   } else {
     stop("Invalid dates specified")
   }
 
   if (date_is_range) {
-      url_compose <- paste0(url_compose,"&dateIsRange=true")
+    url_compose <- paste0(url_compose, "&dateIsRange=true")
   }
   else {
-      url_compose <- paste0(url_compose,"&dateIsRange=false")
-    }
+    url_compose <- paste0(url_compose, "&dateIsRange=false")
+  }
 
   if (summary) {
-    url_compose <- paste0(url_compose,"&summary=true")
+    url_compose <- paste0(url_compose, "&summary=true")
   } else {
-    url_compose <- paste0(url_compose,"&summary=false")
+    url_compose <- paste0(url_compose, "&summary=false")
   }
 
   if (filtered_only) {
-    url_compose <- paste0(url_compose,"&filteredOnly=true")
+    url_compose <- paste0(url_compose, "&filteredOnly=true")
   } else {
-    url_compose <- paste0(url_compose,"&filteredOnly=false")
+    url_compose <- paste0(url_compose, "&filteredOnly=false")
     print("Unfiltered results are not reliable. Use at your own discretion.")
   }
 
   if (length(document_type) > 0) {
-     #dt <- get_document_types()
-       url_compose <- paste0(url_compose,"&documentType=",document_type_str)
+    #dt <- get_document_types()
+    url_compose <- paste0(url_compose, "&documentType=", document_type_str)
 
 
   } else {
@@ -457,7 +473,7 @@ get_industry_values <- function(jurisdiction=c(38),
   }
 
   if (length(agency) > 0) {
-     url_compose <- paste0(url_compose,"&agencies=",agency_str)
+    url_compose <- paste0(url_compose, "&agencies=", agency_str)
   }
 
   return(make_api_call(url_compose))

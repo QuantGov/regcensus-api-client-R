@@ -154,3 +154,33 @@ find_jurisdiction <- function(name=NA){
     return(jurs$jurisdictionID)
 
 }
+
+
+find_country <- function(name=NA){
+
+  if (length(name) == 0)
+    stop("Invalid names specified.")
+
+
+  #find jurisdiction IDs by name
+  jurs <- get_jurisdictions() %>%
+    dplyr::filter(jurisdictionName==country)
+
+  name_list0 = name[1]
+
+  if (length(name) > 1) {
+    name_list0 = paste0(name_list0, "|")
+    for (i in 2:length(name)) {
+      name_list0 = paste0(name_list0, name[i])
+      if (i < length(name) )
+        name_list0 = paste0(name_list0, "|")
+    }
+  }
+
+  jurs <- dplyr::filter(jurs,grepl(name_list0,jurs$country,ignore.case = TRUE))
+
+  jurs <- dplyr::select(jurs,jurisdictionID)
+
+  return(jurs$jurisdictionID)
+
+}
