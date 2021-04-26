@@ -4,8 +4,14 @@
 \alias{get_values}
 \title{Return dataframe with values of series of interest}
 \usage{
-get_values(jurisdiction, series, time, agency = NA, industry = NA,
-  dateIsRange = TRUE)
+get_values(
+  jurisdiction,
+  series,
+  time,
+  agency = NA,
+  industry = NA,
+  dateIsRange = TRUE
+)
 }
 \arguments{
 \item{dateIsRange}{}

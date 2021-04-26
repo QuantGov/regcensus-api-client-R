@@ -4,8 +4,10 @@
 \alias{list_series}
 \title{Generate a list of Series in RegData and their corresponding series IDs and series codes.}
 \usage{
-list_series(id = NA, by = c("all", "series", "agencies", "industries",
-  "jurisdictions", "topics"))
+list_series(
+  id = NA,
+  by = c("all", "series", "agencies", "industries", "jurisdictions", "topics")
+)
 }
 \arguments{
 \item{id}{An integer or vector of integers. See description above and examples below for when vectors are allowed and when single values are required.}

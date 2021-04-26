@@ -1,7 +1,7 @@
 # HELPER FUNCTIONS
 ## Get base url
 get_baseURL <- function() {
-    return("http://ec2-3-89-6-158.compute-1.amazonaws.com:8080/regdata")
+    return("https://api.quantgov.org")
 }
 
 ## Generate API call from controller and requested ID
