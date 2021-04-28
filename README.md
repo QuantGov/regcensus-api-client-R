@@ -1,0 +1,55 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# regcensusAPI
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+The goal of regcensusAPI is to provide an easy way for researchers to
+access regulatory restrictions data from the Mercatus Center at George
+Mason University, RegData. RegData quantifies the volume of regulatory
+restrictions in various jurisdictions, from national to subnational. For
+more information about RegData, visit
+[QuantGov](https://www.quantgov.org) website.
+
+## Installation
+
+You can install the released version of regcensusAPI from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("regcensusAPI")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("QuantGov/regcensus-api-client-R")
+```
+
+## Usage
+
+Using the API is easy. First, you would want to find out what topics are
+covered.
+
+``` r
+library(regcensusAPI)
+#> Welcome to RegCensus API - Pulling initial data
+## basic example code
+get_topics()
+```
+
+All data are further grouped into *series*. The function
+**get\_series\_period()** returns the list of data series, the
+jurisdictions, and the periods for which data are available.
+
+``` r
+get_series_period()
+```
+
+For more information on how to fully utilize regcensusAPI to obtain
+regulatory restrictions data, check out the vignette accompanying the
+package.
