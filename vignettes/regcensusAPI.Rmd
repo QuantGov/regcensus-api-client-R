@@ -55,7 +55,7 @@ The __list_series__ function takes two parameters: the series id and the subset 
 There are other helper functions that give you a tour around RegData. To see the jurisdictions with data in RegData, call __list_jurisdiction__. This function returns the complete list in a list format. 
 
 ```{r}
-list_jurisdictions()
+#list_jurisdictions()
 ```
 The __list_series_period__ function returns a list of all seriesa nd the years with data available. 
 The output from this function can serve as a reference for the valid values that can be passed to parameters in the __get_values__ function. The number of records returned is the unique combination of series and jurisdictions that are available in RegData.The function takes the optional argument jurisdiction id.
