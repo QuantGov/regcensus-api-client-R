@@ -25,14 +25,17 @@ Imports:
   pbapply,
   urltools,
   stringr,
+  stringi,
   rlang,
-  R.cache
+  R.cache,
+  markdown,
+  rmarkdown
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Suggests: 
     knitr,
-    rmarkdown,
-    testthat
+    testthat (>= 3.0.0)
 URL: https://api.quantgov.org
+Config/testthat/edition: 3

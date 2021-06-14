@@ -98,9 +98,9 @@ The __get_values___ function is the primary function for obtaining RegData from 
 <li> *list of jurisdiction ids, using the 'c' function, for example, c(1,2)*
 <li> *list of series ids* </li>
 <li> *list of years*</li>
-<li>  *list of agencies* </li>
-<li>  *list of industries* </li>
-<li>  *dateIsRange* - specify if the list of years provided for the parameter years is a range. Default is TRUE</li>
+<li> *list of agencies* </li>
+<li> *list of industries* </li>
+<li> *dateIsRange* - specify if the list of years provided for the parameter years is a range. Default is TRUE</li>
 
 In the example below, we are interested in the total number of restrictions and total numbe rof words (get_topics(1)) for the US (get_jurisdictions(38)) for the period 2010 to 2018.
 

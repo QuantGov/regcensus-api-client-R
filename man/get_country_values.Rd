@@ -5,9 +5,14 @@
 \title{Return values for a list of jurisdictions-series-year combination. It will return data for both
 national and sub-national (for example, state/province) within the jurisdiction.}
 \usage{
-get_country_values(jurisdiction = c(38, 75), series = c(1, 2),
-  time = c(2010, 2011), industries = NA, date_is_range = TRUE,
-  filtered = TRUE)
+get_country_values(
+  jurisdiction = c(38, 75),
+  series = c(1, 2),
+  time = c(2010, 2011),
+  industries = NA,
+  date_is_range = TRUE,
+  filtered = TRUE
+)
 }
 \arguments{
 \item{jurisdiction}{Integer - Jurisdiction IDs for the data}

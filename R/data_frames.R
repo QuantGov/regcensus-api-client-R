@@ -361,6 +361,7 @@ get_document_types <- function(jurisdiction=NA){
 #' '2018-10-12'
 #' @param agency Integer - List of agencies. Obtain from get_agencies()
 #' @param industry_type String - List of industry code types desired. Valid values are "all", "2-Digit","3-Digit","4-Digit","5-Digit","6-Digit"
+#' @param industry String - List of industry codes to obtain.
 #' @param date_is_range Boolean - Date parameter is range
 #' @param filtered_only Boolean - For industry values, include only good-performing industry classifications.
 #' @param document_type Integer - The type of document. Obtain from list_document_types()
@@ -381,14 +382,14 @@ get_industry_values <- function(jurisdiction=c(38),
                                 summary=TRUE,
                                 document_type=1) {
   #list of industry options
-  industry_types = c("all","2-Digit","3-Digit","4-Digit","5-Digit","6-Digit")
+  industry_types <- c("all", "2-Digit", "3-Digit", "4-Digit", "5-Digit", "6-Digit")
 
   #parse parameters
   series_str <- paste(series, collapse = ",")
   time_str <- paste(time, collapse = ",")
   industry_str <- paste(industry_type,collapse = ",")
   agency_str <- paste(agency,collapse = ",")
-  document_type_str = paste(document_type,collapse = ",")
+  document_type_str <- paste(document_type, collapse = ",")
 
   #if names are used, find the corresponding jurisdiction IDs
   if (length(jurisdiction) > 0) {
@@ -404,6 +405,10 @@ get_industry_values <- function(jurisdiction=c(38),
     stop("Invalid jurisdiction specified.")
   }
 
+  if(length(industry)>0){
+    url_compose <- paste0(url_compose,"&industry=",paste(industry, collapse = ","))
+  }
+
   #ensure correct industry type is selected
   if (length(industry_type) > 0) {
     # get list of industry types
@@ -411,13 +416,11 @@ get_industry_values <- function(jurisdiction=c(38),
       dplyr::mutate(ndigits = stringi::stri_length(industryCode))
     ## 2-digit
     naics2 <- industry_types %>%filter(ndigits==2)
-    naics3 <- industry_types %>%filter(ndigits==2)
-    naics4 <- industry_types %>%filter(ndigits==2)
-    naics5 <- industry_types %>%filter(ndigits==2)
-    naics6 <- industry_types %>%filter(ndigits==2)
+    naics3 <- industry_types %>%filter(ndigits==3)
+    naics4 <- industry_types %>%filter(ndigits==4)
+    naics5 <- industry_types %>%filter(ndigits==5)
+    naics6 <- industry_types %>%filter(ndigits==6)
 
-
-    ## 3-digit
     url_compose <- paste0(url_compose,"&industryType=",industry_type)
   }else{
     print("Provide valid industry code type.")
