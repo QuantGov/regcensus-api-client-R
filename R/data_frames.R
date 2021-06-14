@@ -144,7 +144,7 @@ get_series_period <- function(jurisdiction=NA) {
 #' @param date_is_range Boolean indicating whether the time parameter is range or should be treated as single data points
 #' @param summary Boolean - Return summary instead of document level data
 #' @param filtered Boolean - Exclude poorly-performing industry classification results
-#' @param documentType Integer - ID of document
+#' @param document_type Integer - ID of document
 #' @param document Integer - List of document IDs to return data for. Use when requesting document-level data instead of
 #' summary data.
 #' @param include_metadata Boolean - Should dataframe include the metadata to make it more readable
@@ -156,8 +156,8 @@ get_series_period <- function(jurisdiction=NA) {
 #' get_values(jurisdiction = 38, series = c(92), time = c('1990','2000'),
 #' industry = c('111','33'), agency = c(66,111))
 
-get_values <- function(jurisdiction, series, time=c(2015,2019), summary=TRUE,
-                       filtered=TRUE, documentType=3, agency=0, industry='0',
+get_values <- function(jurisdiction, series, time=c(2015,2020), summary=TRUE,
+                       filtered=TRUE, document_type=3, agency=0, industry='0',
                        date_is_range = TRUE, document=NA, include_metadata=FALSE) {
 
     if (!summary) {
@@ -291,7 +291,6 @@ get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
 #'
 #' @param document_type Integer - ID of document type of interest. Obtain from get_document_types().
 #' @param jurisdiction Integer - ID of jurisdiction of interest
-#'
 #' @return data frame
 #' @export
 #'
