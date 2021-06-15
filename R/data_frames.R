@@ -1,7 +1,6 @@
 # RETURN DATA FRAMES FROM USER REQUESTS
 
 
-
 #' Return list of topics in RegCensus
 #'
 #' @param topic Integer - the ID of the topic of interest
@@ -22,7 +21,6 @@ get_topics <- function(topic = NA) {
 
   return(make_api_call(url_compose))
 }
-
 
 
 #' Generate a list of jurisdictions in RegData
