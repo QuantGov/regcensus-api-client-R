@@ -117,9 +117,9 @@ get_series <- function(id = NA) {
 #' @export
 #'
 #' @examples
-#' get_series_period()
-#' get_series_period(38)
-get_series_period <- function(jurisdiction=NA) {
+#' get_periods()
+#' get_periods(38)
+get_periods <- function(jurisdiction=NA) {
 
   #if empty jurisdiction, return data for all
     if (!is.na(jurisdiction)) {
@@ -289,7 +289,7 @@ get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
 
 #' Title Return the list of documents for a series-jurisdiction combination
 #'
-#' @param document_type Integer - ID of document type of interest. Obtain from get_document_types().
+#' @param document_type Integer - ID of document type of interest. Obtain from list_document_types().
 #' @param jurisdiction Integer - ID of jurisdiction of interest
 #' @return data frame
 #' @export
@@ -314,7 +314,7 @@ get_documents <- function(jurisdiction, document_type=3){
   }
   else {
     print("Document type (documentType) is required. Select a document type from the list below:")
-    print(get_document_types(NULL))
+    print(list_document_types(NULL))
     stop("Invalid document type specified.")
   }
 
@@ -336,9 +336,9 @@ get_documents <- function(jurisdiction, document_type=3){
 #' @export
 #'
 #' @examples
-#' get_document_types(38)
-#' get_document_types()
-get_document_types <- function(jurisdiction=NA){
+#' list_document_types(38)
+#' list_document_types()
+list_document_types <- function(jurisdiction=NA){
 
   if (!is.na(jurisdiction)) {
     id_str <- paste(jurisdiction, collapse = ",")
@@ -465,7 +465,7 @@ get_industry_values <- function(jurisdiction=c(38),
   }
 
   if (length(document_type) > 0) {
-     #dt <- get_document_types()
+     #dt <- list_document_types()
        url_compose <- paste0(url_compose,"&documentType=",document_type_str)
 
 
