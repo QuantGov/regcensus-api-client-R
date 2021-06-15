@@ -138,10 +138,10 @@ get_series_period <- function(jurisdiction=NA) {
 #'
 #' @param jurisdiction Integer - the ID of the jurisdiction of interest
 #' @param series Series ID
-#' @param time The time
+#' @param date The date
 #' @param agency The agency ID
 #' @param industry The industry code using the jurisdiction-specific coding system
-#' @param date_is_range Boolean indicating whether the time parameter is range or should be treated as single data points
+#' @param date_is_range Boolean indicating whether the date parameter is range or should be treated as single data points
 #' @param summary Boolean - Return summary instead of document level data
 #' @param filtered Boolean - Exclude poorly-performing industry classification results
 #' @param document_type Integer - ID of document
@@ -153,10 +153,10 @@ get_series_period <- function(jurisdiction=NA) {
 #' @export
 #'
 #' @examples
-#' get_values(jurisdiction = 38, series = c(92), time = c('1990','2000'),
+#' get_values(jurisdiction = 38, series = c(92), date = c('1990','2000'),
 #' industry = c('111','33'), agency = c(66,111))
 
-get_values <- function(jurisdiction, series, time=c(2015,2020), summary=TRUE,
+get_values <- function(jurisdiction, series, date=c(2015,2020), summary=TRUE,
                        filtered=TRUE, document_type=3, agency=0, industry='0',
                        date_is_range = TRUE, document=NA, include_metadata=FALSE) {
 
@@ -167,7 +167,7 @@ get_values <- function(jurisdiction, series, time=c(2015,2020), summary=TRUE,
 
     series_str <- paste(series, collapse = ",")
 
-    time_str <- paste(time, collapse = ",")
+    date_str <- paste(date, collapse = ",")
 
     industry_str <- paste(industry,collapse = ",")
 
@@ -201,10 +201,10 @@ get_values <- function(jurisdiction, series, time=c(2015,2020), summary=TRUE,
         url_compose <- paste0(url_compose,"&industry=",industry_str)
     }
 
-    if (length(time) > 0) {
-        url_compose <- paste0(url_compose,"&time=",time_str,"&date=",time_str)
+    if (length(date) > 0) {
+        url_compose <- paste0(url_compose,"&date=",date_str,"&date=",date_str)
     }else{
-        stop("Time is required.")
+        stop("Date is required.")
     }
 
     if (date_is_range) {
@@ -230,7 +230,7 @@ get_values <- function(jurisdiction, series, time=c(2015,2020), summary=TRUE,
 #'
 #' @param jurisdiction Integer - Jurisdiction IDs for the data
 #' @param series Integer - Series IDs
-#' @param time Date string - For period of interest
+#' @param date Date string - For period of interest
 #' @param industries Text - List of industries to pull data for using the jurisdiction specific coding system
 #' @param date_is_range Boolean - Indicate if the years values is range instead of just single values
 #' @param filtered Boolean - Indicate whether to return filtered data, i.e., the industry-relevant data with poorly classified industries excluded
@@ -239,12 +239,12 @@ get_values <- function(jurisdiction, series, time=c(2015,2020), summary=TRUE,
 #' @export
 #'
 get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
-                             time = c(2010,2011), industries = NA,
+                             date = c(2010,2011), industries = NA,
                              date_is_range=TRUE, filtered=TRUE){
-    if (length(time) == 0) {
-      stop("You need to include valid time period")
+    if (length(date) == 0) {
+      stop("You need to include valid date")
     }else
-        time_str <- paste0(time, collapse = ",")
+        date_str <- paste0(date, collapse = ",")
 
     if (length(jurisdiction) == 0) {
         print("You need to select at least one of the following jurisdiction IDs")
@@ -252,7 +252,7 @@ get_country_values <- function(jurisdiction = c(38,75), series = c(1,2),
         stop()
     }else{
         jurisdiction_str <- paste0(jurisdiction, collapse = ",")
-        url_compose <- paste0(get_baseURL(),"/values/country?countries=",jurisdiction_str,"&years=",time_str)
+        url_compose <- paste0(get_baseURL(),"/values/country?countries=",jurisdiction_str,"&years=",date_str)
     }
 
     if (length(series) == 0) {
@@ -356,7 +356,7 @@ get_document_types <- function(jurisdiction=NA){
 #'
 #' @param jurisdiction An Integer - jurisdiction(s) of interest. Obtain list of jurisdictions from list_jurisdictions()
 #' @param series Integer -  (List of ) Series of interest. Obtain valid list from list_series(id, by)
-#' @param time Date (string) - String format of dates. For summary data, just the year is enough. For daily data, use full date format such as
+#' @param date Date (string) - String format of dates. For summary data, just the year is enough. For daily data, use full date format such as
 #' '2018-10-12'
 #' @param agency Integer - List of agencies. Obtain from get_agencies()
 #' @param industry_type String - List of industry code types desired. Valid values are "all", "2-Digit","3-Digit","4-Digit","5-Digit","6-Digit"
@@ -374,7 +374,7 @@ get_industry_values <- function(jurisdiction=c(38),
                                 industry_type=NA,
                                 industry=NA,
                                 series=1,
-                                time=c('2015','2019'),
+                                date=c('2015','2019'),
                                 agency=c(0),
                                 date_is_range=TRUE,
                                 filtered_only=TRUE,
@@ -385,7 +385,7 @@ get_industry_values <- function(jurisdiction=c(38),
 
   #parse parameters
   series_str <- paste(series, collapse = ",")
-  time_str <- paste(time, collapse = ",")
+  date_str <- paste(date, collapse = ",")
   industry_str <- paste(industry_type,collapse = ",")
   agency_str <- paste(agency,collapse = ",")
   document_type_str <- paste(document_type, collapse = ",")
@@ -439,7 +439,7 @@ get_industry_values <- function(jurisdiction=c(38),
 
   #ensure the correct dates are selected
   if (length(date) > 0) {
-    url_compose <- paste0(url_compose,"&date=",time_str)
+    url_compose <- paste0(url_compose,"&date=",date_str)
   } else {
     stop("Invalid dates specified")
   }
