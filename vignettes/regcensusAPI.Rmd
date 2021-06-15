@@ -22,7 +22,7 @@ library(regcensusAPI)
 
 RegCensusAPI is an API client that connects to the RegData regulatory restrictions data by the Mercatus Center at George Mason University. RegData uses machine learning algorithms to quantify the number of regulatory restrictions in a jurisdiction. Currently, RegData is available for three countries - Australia, Canada, and the United States. In addition, there are regulatory restrictions data for jurisdictions (provinces in Canada and states in Australia and US) within these countries. You can find out more about RegData from http://www.quantgov.org. 
 
-This R API client connects to the api located at at the [QuantGov website][1]. More advanced users who want to interact with the API directly can use the link above to pull data from the RegData API. Python users can access the same features provided in this package in the python package __regcensus__.
+This R API client connects to the api located at the [QuantGov website][1]. More advanced users who want to interact with the API directly can use the link above to pull data from the RegData API. Python users can access the same features provided in this package in the python package __regcensus__.
 
 ## Structure of the API
 
@@ -69,7 +69,7 @@ list_series_period(jurisdiction = 38)
 ```
 
 ## Metadata
-The __get___ functions return the details about RegData metadata. These metadata are not included in the __get_values__ functions that will be described later. 
+The __get__ functions return the details about RegData metadata. These metadata are not included in the __get_values__ functions that will be described later. 
 
 ### Jurisdictions 
 
@@ -81,16 +81,21 @@ get_jurisdictions(38)
 
 ### Agencies
 The __get_agencies__ function returns a data frame of all agencies with data in RegData. If an ID is supplied, the data frame returns the details about a single agency specified by the id. The data frame includes characteristics of the agencies. Currently, agency data are only available for federal RegData.
+
 ```{r}
 get_agencies()
 ```
+
 Use the value of the agency_id field when pulling values with the __get_values__ function.
 
 ### Industries
-The __get_industries__ function returns a data frame of industries with data in the API. Presently the only classification system available is the North American Industry Classification System (NAICS). NAICS is used for both countries in North America and Australia, even the latter uses the Australia and New Zealand Standard Industrial Classification (ANZSIC) system. Presently, industry regulations for Australia are based on the NAICS. As RegData expands to other countries, the industry codes will be country specific as well as contain mapping to the Standard Industry Codes (SIC) system.
+The __get_industries__ function returns a data frame of industries with data in the API. Presently the only classification system available is the North American Industry Classification System (NAICS). NAICS is used for both countries in North America and Australia, even though the latter uses the Australia and New Zealand Standard Industrial Classification (ANZSIC) system. Presently, industry regulations for Australia are based on the NAICS. As RegData expands to other countries, the industry codes will be country specific as well as contain mapping to the Standard Industry Codes (SIC) system.
+
 ```{r}
 get_industries(38)
 ```
+
+A comprehensive list of NAICS codes can be viewed at the [US Census website][2]. 
 
 ## Values
 
@@ -158,4 +163,25 @@ agency_restrictions_ind <- agency_by_industry %>%
 pander::pandoc.table(agency_restrictions_ind)
 ```
 
+## Advanced Functionality
+
+Users also have available several advanced and specialized functions for particular research uses. These include specialized __get_values__ functions and functions to make document-level calls on the API.
+
+### Specialized get_values functions
+
+
+### Document-level data
+Where the previous instructions in this vignette account for aggregated data, document-level data will allow users to view or download specific documents by jurisdiction or agency. These data are large so it is not reccomended to make document-level calls unless there is a specific use case. 
+
+A list of document types can be viewed by jurisdiction (or all jurisdictions) through the __list_document_types__ function. In the example below, we look at all the document types for the state of Nebraska.
+
+```{r}
+list_document_types(jurisdiction = 78)
+```
+
+Downloading documents allows the user to collect raw data from RegData for their own analysis. This is accomplished through the __get_documents__ function with attributes for jurisdiction and document type. It is HIGHLY reccomended that the user make an API call with a specific jurisdiction in mind. Pulling document-level data will take longer depending on the jurisdiction. Attempting to pull all jurisdictions will result in an error. The example below shows how to make a call. In this case, we do not let the function run in the vignette.
+
+#get_documents(jurisdiction = 78, document_type = 3)
+
 [1]:https://api.quantgov.org/swagger-ui.html
+[2]:https://www.census.gov/naics/
