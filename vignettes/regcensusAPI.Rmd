@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(regcensusAPI)
 ```
+
 ## Introduction
 
 RegCensusAPI is an API client that connects to the RegData regulatory restrictions data by the Mercatus Center at George Mason University. RegData uses machine learning algorithms to quantify the number of regulatory restrictions in a jurisdiction. Currently, RegData is available for three countries - Australia, Canada, and the United States. In addition, there are regulatory restrictions data for jurisdictions (provinces in Canada and states in Australia and US) within these countries. You can find out more about RegData from http://www.quantgov.org. 
@@ -37,55 +38,58 @@ RegCensus API defines a number of periods depending on the series. For example, 
 There are six helper functions to retrieve information about these key components of regdata. These functions provider the following information: topics, documents, jurisdictions, series, agencies, and years with data. The list functions begin with __list__. For example, to view the list of topics call __list_topics__. When an topic id parameter is supplied, the function returns the details about a specific topic. 
 
 ```{r}
-#list_topics()
+list_topics()
 ```
 
 Each topic comprises one or more *series*. The __list_series__ function returns the list of all series when no series id is provided. 
 
-```{r list-series-example, eval=TRUE, include=TRUE, echo=TRUE}
-#list_series(id = 91)
+```{r}
+list_series(by='all')
 ```
 
 You can request the series under a particular topic by passing the topic id as paramter to the __list_series__ function.
-```{r}
-#list_series(by='all')
+
+```{r list-series-example, eval=TRUE, include=TRUE, echo=TRUE}
+list_series(id = 91)
 ```
+
 The __list_series__ function takes two parameters: the series id and the subset of data - one of "all", "jurisdiction", "topic", "agency", or "industry". When any of the subset options must be used with the id, where the id represents an id within the subset. For example, list_series(id=1,by='agencies') will return the list of series for agency with ID 1.
 
 There are other helper functions that give you a tour around RegData. To see the jurisdictions with data in RegData, call __list_jurisdiction__. This function returns the complete list in a list format. 
 
 ```{r}
-#list_jurisdictions()
+list_jurisdictions()
 ```
-The __list_series_period__ function returns a list of all seriesa nd the years with data available. 
-The output from this function can serve as a reference for the valid values that can be passed to parameters in the __get_values__ function. The number of records returned is the unique combination of series and jurisdictions that are available in RegData.The function takes the optional argument jurisdiction id.
+
+The __list_series_period__ function returns a list of all series and the years with data available. 
+The output from this function can serve as a reference for the valid values that can be passed to parameters in the __get_values__ function. The number of records returned is the unique combination of series and jurisdictions that are available in RegData. The function takes the optional argument jurisdiction id. In this case, we are calling for data from the United States.
 
 ```{r}
-#list_series_period(jurisdiction = 38)
+list_series_period(jurisdiction = 38)
 ```
 
-
 ## Metadata
-The __get_*__ functions return the details about RegData metadata. These metadata are not included in the __get_values__ functions that will be described later. 
+The __get___ functions return the details about RegData metadata. These metadata are not included in the __get_values__ functions that will be described later. 
 
 ### Jurisdictions 
 
-Use the __get_jurisdiction__ function to return a data frame with all the jurisdictions. When you supply the jurisdiction ID parameter, the function returns the details of just that jurisdiction. Use the output from the __get_jurisdiction__ function to merge with data from the __get_values__ function.
+Use the __get_jurisdiction__ function to return a data frame with all the jurisdictions. When you supply the jurisdiction ID parameter, the function returns the details of just that jurisdiction. Use the output from the __get_jurisdiction__ function to merge with data from the __get_values__ function. Jurisdicitions are constantly added to each new iteration of RegData so consult the data with __list_jurisdictions__ to see a complete list.
 
 ```{r}
-#get_jurisdictions(38)
+get_jurisdictions(38)
 ```
+
 ### Agencies
 The __get_agencies__ function returns a data frame of all agencies with data in RegData. If an ID is supplied, the data frame returns the details about a single agency specified by the id. The data frame includes characteristics of the agencies. Currently, agency data are only available for federal RegData.
 ```{r}
-#get_agencies()
+get_agencies()
 ```
 Use the value of the agency_id field when pulling values with the __get_values__ function.
 
 ### Industries
-The __get_industries__ function returns a data frame of industries with data in the API. Presently the only classification system available is the North American Industry Classification System (NAICS). NAICS is used for both countries in North America and Australia, even the latter uses the Australia and New Zealand Standard Industrial Classification (ANZSIC) system. Presently, industry regulations for Australia are based on the NAICS. RegData expands to other countries, the industry codes will be country specific as well as contain mapping to the Standard Industry Codes (SIC) system.
+The __get_industries__ function returns a data frame of industries with data in the API. Presently the only classification system available is the North American Industry Classification System (NAICS). NAICS is used for both countries in North America and Australia, even the latter uses the Australia and New Zealand Standard Industrial Classification (ANZSIC) system. Presently, industry regulations for Australia are based on the NAICS. As RegData expands to other countries, the industry codes will be country specific as well as contain mapping to the Standard Industry Codes (SIC) system.
 ```{r}
-#get_industries(38)
+get_industries(38)
 ```
 
 ## Values
@@ -98,10 +102,12 @@ The __get_values___ function is the primary function for obtaining RegData from 
 <li> *list of industries* </li>
 <li> *dateIsRange* - specify if the list of years provided for the parameter years is a range. Default is TRUE</li>
 
-In the example below, we are interested in the total number of restrictions and total numbe rof words (get_topics(1)) for the US (get_jurisdictions(38)) for the period 2010 to 2018.
+In the example below, we are interested in the total number of restrictions and total number of words (get_topics(1)) for the US (get_jurisdictions(38)) for all years between and including 2010 and 2018.
 
-{r}
-vals <-get_values(jurisdiction = 38, series = c(1,2), date = c(2010,2018))
+```{r}
+vals <- get_values(jurisdiction = 38, series = c(1,2), date = c(2010,2018))
+print(vals)
+```
 
 ### Values by Subgroup
 You can obtain data for any of the three subgroups for each series - agencies, industries, and occupations (when they become available).
@@ -111,13 +117,13 @@ To obtain the restrictions for a specific agency (or agencies), the series id su
 
 ```{r}
 #Identify all agencies
-#get_agencies()
+get_agencies()
 
 #Find the available series for this agency, suppose agency_ids 81 and 84
-#list_series(id=91, by='agencies')
+list_series(id=91, by='agencies')
 
-##Call the get_values() for this agency and series 91 and 92
-#get_values(jurisdiction = 38, series = c(91,92), date = c(1990,2018), agency = c(81,84))
+#Call the get_values() for this agency and series 91 and 92
+get_values(jurisdiction = 38, series = c(91,92), date = c(1990,2018), agency = c(81,84))
 ```
 
 #### Values by Agency and Industry
@@ -126,10 +132,10 @@ Some agency series may also have data by industry. For example, under the Total 
 To pull industry-relevant restrictions for an agency, call __get_agencies__ with the *industry* variable. The industry variable is of type string, and valid values include the industry codes specified in the classification system obtained by calling the __get_industries(jurisdiction)__ function.
 
 In the example below, the series 92 (Restrictions by Agency and Industry), we can request data for the two industries 111 and 33 by the following code snippet.
-```{r}
-#get_values(jurisdiction = 38, series = c(92), date = c(1990,2000), industry = c('111','33'), agency = 66)
-```
 
+```{r}
+get_values(jurisdiction = 38, series = c(92), date = c(1990,2000), industry = c('111','33'), agency = 66)
+```
 
 ### Merging with Metadata
 To minimize the network bandwidth requirements to use RegCensusAPI, the data returned by __get_values__ functions contain very minimal metadata. Once you pull the values by __get_values__, you can use various R packages to include the metadata.
@@ -138,7 +144,7 @@ Suppose we want to attach the agency names and other agency characteristics to t
 
 Using the __dplyr__ package, we can merge the agency data with the values data as in the code snippet below. This code function assumes you have loaded the *dplyr* and *pander* packages. For more information about both of these packages, run the 'help' commands (? or help(dplyr)).
 
-{r, results='asis'}
+```{r, results='asis'}
 require(dplyr)
 require(pander)
 agencies <- get_agencies()
@@ -150,5 +156,6 @@ agency_restrictions_ind <- agency_by_industry %>%
   dplyr::left_join(agencies, by=c('agency_agency_id'='agency_id'))
 
 pander::pandoc.table(agency_restrictions_ind)
+```
 
 [1]:https://api.quantgov.org/swagger-ui.html
