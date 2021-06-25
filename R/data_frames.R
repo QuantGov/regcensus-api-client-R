@@ -117,7 +117,7 @@ get_series <- function(id = NA) {
 #' @examples
 #' get_periods()
 #' get_periods(38)
-get_periods <- function(jurisdiction = NA) {
+get_series_period <- function(jurisdiction = NA) {
 
   #if empty jurisdiction, return data for all
   if (!is.na(jurisdiction)) {
