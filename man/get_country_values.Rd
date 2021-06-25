@@ -8,9 +8,10 @@ national and sub-national (for example, state/province) within the jurisdiction.
 get_country_values(
   jurisdiction = c(38, 75),
   series = c(1, 2),
-  time = c(2010, 2011),
+  date = c(2010, 2011),
   industries = NA,
   date_is_range = TRUE,
+  document_type = 3,
   filtered = TRUE
 )
 }
@@ -19,11 +20,13 @@ get_country_values(
 
 \item{series}{Integer - Series IDs}
 
-\item{time}{Date string - For period of interest}
+\item{date}{Date string - For period of interest}
 
 \item{industries}{Text - List of industries to pull data for using the jurisdiction specific coding system}
 
 \item{date_is_range}{Boolean - Indicate if the years values is range instead of just single values}
+
+\item{document_type}{Integer - ID of document type}
 
 \item{filtered}{Boolean - Indicate whether to return filtered data, i.e., the industry-relevant data with poorly classified industries excluded}
 }

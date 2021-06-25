@@ -9,7 +9,7 @@ get_industry_values(
   industry_type = NA,
   industry = NA,
   series = 1,
-  time = c("2015", "2019"),
+  date = c("2015", "2019"),
   agency = c(0),
   date_is_range = TRUE,
   filtered_only = TRUE,
@@ -26,7 +26,7 @@ get_industry_values(
 
 \item{series}{Integer -  (List of ) Series of interest. Obtain valid list from list_series(id, by)}
 
-\item{time}{Date (string) - String format of dates. For summary data, just the year is enough. For daily data, use full date format such as
+\item{date}{Date (string) - String format of dates. For summary data, just the year is enough. For daily data, use full date format such as
 '2018-10-12'}
 
 \item{agency}{Integer - List of agencies. Obtain from get_agencies()}

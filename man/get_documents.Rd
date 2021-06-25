@@ -9,7 +9,7 @@ get_documents(jurisdiction, document_type = 3)
 \arguments{
 \item{jurisdiction}{Integer - ID of jurisdiction of interest}
 
-\item{document_type}{Integer - ID of document type of interest. Obtain from get_document_types().}
+\item{document_type}{Integer - ID of document type of interest. Obtain from list_document_types().}
 }
 \value{
 data frame
