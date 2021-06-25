@@ -164,11 +164,28 @@ pander::pandoc.table(agency_restrictions_ind)
 ```
 
 ## Advanced Functionality
-
-Users also have available several advanced and specialized functions for particular research uses. These include specialized __get_values__ functions and functions to make document-level calls on the API.
+Users also have available several advanced and specialized functions for particular research uses. These include specialized __get_values__ functions and other functions to make document-level calls on the API.
 
 ### Specialized get_values functions
+Users also have access to two new functions that act similarly to __get_values__. These provide more flexibility in making calls to the API without needing to create as many arguments as __get_values__. 
 
+#### Values by Country
+This function, notated as __get_country_values__, will pull all aggregated values by country on both the national and sub-national level. This provides a quicker method of collecting larger amounts of data without needing to specify specific sub-national entities. This method is ideal for pulling aggregate data for cross-jurisdictional comparisons or for pulling all values for one country to do a meta-level analysis. Currently, the countries available are the United States, Canada, and Australia on both the national and sub-national. In future versions of RegData, data will be available for the United Kingdom.
+
+The example below pulls all aggregated industry values for the United States; including national values, sub-national for all 50 states and the Disctrict of Columbia for 2010 and 2011
+
+```{r}
+get_country_values(jurisdiction = 38, series = c(1,2), date = c(2010,2011), date_is_range=TRUE, filtered=TRUE)
+```
+
+#### Values by Industry
+Much in the same way __get_country_values__ pulls all jurisdictions, __get_industry_values__ pulls all industry values for a specified jurisdiction. This allows users to gather all aggregated industry values by jurisdiction, industry name, and/or NAICS code between the 2-digit to 6-digit level. This function is ideal for pulling data for intra-industry and inter-industry comparisons.
+
+The example below gathers data for all industries at the 3-Digit NAICS level on the national level of the United States for 2010 and 2011.
+
+```{r}
+get_industry_values(industry_type = "3-Digit", jurisdiction = 38, series = c(1,2), data = c(2010, 2011), date_is_range = TRUE, filtered = TRUE)
+```
 
 ### Document-level data
 Where the previous instructions in this vignette account for aggregated data, document-level data will allow users to view or download specific documents by jurisdiction or agency. These data are large so it is not reccomended to make document-level calls unless there is a specific use case. 
