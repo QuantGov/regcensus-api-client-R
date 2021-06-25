@@ -338,9 +338,9 @@ get_documents <- function(jurisdiction, document_type = 3) {
 #' @export
 #'
 #' @examples
-#' list_document_types(38)
-#' list_document_types()
-list_document_types <- function(jurisdiction = NA) {
+#' get_document_types(38)
+#' get_document_types()
+get_document_types <- function(jurisdiction = NA) {
 
   if (!is.na(jurisdiction)) {
     id_str <- paste(jurisdiction, collapse = ",")
