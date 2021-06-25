@@ -57,7 +57,6 @@ The output from this function can serve as a reference for the valid values that
 #list_seriesyear(jurisdictionID = 38)
 ```
 
-
 ## Metadata
 The __get__ functions return the details about RegData metadata. These metadata are not included in the __get_values()__ functions that will be described later. 
 
@@ -90,11 +89,9 @@ The __get_values()___ function is the primary function for obtaining RegData. Th
 <li>  *list of industries* </li>
 <li>  *dateIsRange* - specify if the list of years provided for the parameter years is a range. Default is TRUE</li>
 
-In the example below, we are interested in the total number of restrictions and total numbe rof words (get_topics(1)) for the US (get_jurisdictions(38)) for the period 2010 to 2018.
+In the example below, we are interested in the total number of restrictions and total number of words (get_topics(1)) for the US (get_jurisdictions(38)) for all years between 2010 and 2018.
 
-```{r}
-#vals <-get_values(jurisdiction = 38, series = c(1,2), time = c(2010,2018))
-```
+vals <-get_values(jurisdiction = 38, series = c(1,2), date = c(2010,2018))
 
 ### Values by Subgroup
 You can obtain data for any of the three subgroups for each series - agencies, industries, and occupations (when they become available).
@@ -110,7 +107,7 @@ To obtain the restrictions for a specific agency (or agencies), the series id su
 #list_series(id=91, by='agencies')
 
 ##Call the get_values() for this agency and series 91 and 92
-#get_values(jurisdiction = 38, series = c(91,92), time = c(1990,2018), agency = c(81,84))
+#get_values(jurisdiction = 38, series = c(91,92), date = c(1990,2018), agency = c(81,84))
 ```
 
 #### Values by Agency and Industry
@@ -120,7 +117,7 @@ To pull industry-relevant restrictions for an agency, call __get_agencies()__ wi
 
 In the example below, the series 92 (Restrictions by Agency and Industry), we can request data for the two industries 111 and 33 by the following code snippet.
 ```{r}
-#get_values(jurisdiction = 38, series = c(92), time = c(1990,2000), industry = c('111','33'), agency = 66)
+#get_values(jurisdiction = 38, series = c(92), date = c(1990,2000), industry = c('111','33'), agency = 66)
 ```
 
 
@@ -131,19 +128,20 @@ Suppose we want to attach the agency names and other agency characteristics to t
 
 Using the __dplyr__ package, we can merge the agency data with the values data as in the code snippet below.
 This code function assumes you have loaded the 
-```{r, results='asis'}
+{r, results='asis'}
+
 require(dplyr)
 require(pander)
-#agencies <- get_agencies()
-#agency_by_industry <- get_values(jurisdiction = 38,
-#                                 series = c(92), time = c(1990,2000), 
-#                                 industry = c('111','33'), 
-#                                 agency = c(66,111))
+agencies <- get_agencies()
+agency_by_industry <- get_values(jurisdiction = 38,
+                                 series = c(92), date = c(1990,2000), 
+                                 industry = c('111','33'), 
+                                 agency = c(66,111))
 #agency_restrictions_ind <- agency_by_industry %>%
-#  dplyr::left_join(agencies, by=c('agency_agency_id'='agency_id'))
+  dplyr::left_join(agencies, by=c('agency_agency_id'='agency_id'))
 
 #pander::pandoc.table(agency_restrictions_ind)
-```
+
 
 
 [1]:https://api.quantgov.org/swagger-ui.html
