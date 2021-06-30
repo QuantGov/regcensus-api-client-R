@@ -31,41 +31,41 @@ The API organizes data around __topics__, which are then divided into __series__
 A fundamental concept in RegData is the __document__. In RegData, a set of documents represents a body of text (or corpus) for which we have produced regulatory restriction counts. For example, to produce data on regulatory restrictions imposed by the US Federal government, RegData uses the Code of Federal Regulations (CFR) as the source documents. Within the CFR, RegData identifies a unit of regulation as the title-part combination. The CFR is organized into 50 titles, and within each title are parts, which could have subparts, but not always. Under the parts are sections. Determining this unit of analyses is critical for the context of the data produced by RegData. Producing regulatory restriction data for US states follows the same strategy but uses the state-specific regulatory code. 
 
 In requesting data through the API, you must specify the document type and the indicate a preference for *summary* or *document-level*. By default, RegCensus API returns summarized data for the period of interest. This means that if you do not specify the the *summary*
-preference, you will receive the summarized data for a period. The __list_series_period__ helper function (described below) returns the periods available for each series.
+preference, you will receive the summarized data for a period. The __get_series_period__ helper function (described below) returns the periods available for each series.
 
 RegCensus API defines a number of periods depending on the series. For example, the total restrictions series of Federal regulations uses two main periods: daily and annual. The daily data produces the number of regulatory restrictions issued on a particular date by the US Federal government. The same data are available on an annual basis.
 
-There are six helper functions to retrieve information about these key components of regdata. These functions provider the following information: topics, documents, jurisdictions, series, agencies, and years with data. The list functions begin with __list__. For example, to view the list of topics call __list_topics__. When an topic id parameter is supplied, the function returns the details about a specific topic. 
+There are six helper functions to retrieve information about these key components of regdata in a list format to help the user get a sense of the data available to them. These functions provide the following information: topics, documents, jurisdictions, series, agencies, and years with data. For example, to view the list of topics call __get_topics__. When an topic id parameter is supplied, the function returns the details about a specific topic. 
 
 ```{r}
-list_topics()
+get_topics()
 ```
 
-Each topic comprises one or more *series*. The __list_series__ function returns the list of all series when no series id is provided. 
+Each topic comprises one or more *series*. The __get_series__ function returns the list of all series when no series id is provided. 
 
 ```{r}
-list_series(by='all')
+get_series(by='all')
 ```
 
-You can request the series under a particular topic by passing the topic id as paramter to the __list_series__ function.
+You can request the series under a particular topic by passing the topic id as paramter to the __get_series__ function.
 
 ```{r list-series-example, eval=TRUE, include=TRUE, echo=TRUE}
-list_series(id = 91)
+get_series(id = 91)
 ```
 
-The __list_series__ function takes two parameters: the series id and the subset of data - one of "all", "jurisdiction", "topic", "agency", or "industry". When any of the subset options must be used with the id, where the id represents an id within the subset. For example, list_series(id=1,by='agencies') will return the list of series for agency with ID 1.
+The __get_series__ function takes two parameters: the series id and the subset of data - one of "all", "jurisdiction", "topic", "agency", or "industry". When any of the subset options must be used with the id, where the id represents an id within the subset. For example, get_series(id=1,by='agencies') will return the list of series for agency with ID 1.
 
-There are other helper functions that give you a tour around RegData. To see the jurisdictions with data in RegData, call __list_jurisdiction__. This function returns the complete list in a list format. 
+There are other helper functions that give you a tour around RegData. To see the jurisdictions with data in RegData, call __get_jurisdiction__. This function returns the complete list in a list format. 
 
 ```{r}
-list_jurisdictions()
+get_jurisdictions()
 ```
 
-The __list_series_period__ function returns a list of all series and the years with data available. 
+The __get_series_period__ function returns a list of all series and the years with data available. 
 The output from this function can serve as a reference for the valid values that can be passed to parameters in the __get_values__ function. The number of records returned is the unique combination of series and jurisdictions that are available in RegData. The function takes the optional argument jurisdiction id. In this case, we are calling for data from the United States.
 
 ```{r}
-list_series_period(jurisdiction = 38)
+get_series_period(jurisdiction = 38)
 ```
 
 ## Metadata
@@ -73,7 +73,7 @@ The __get__ functions return the details about RegData metadata. These metadata 
 
 ### Jurisdictions 
 
-Use the __get_jurisdiction__ function to return a data frame with all the jurisdictions. When you supply the jurisdiction ID parameter, the function returns the details of just that jurisdiction. Use the output from the __get_jurisdiction__ function to merge with data from the __get_values__ function. Jurisdicitions are constantly added to each new iteration of RegData so consult the data with __list_jurisdictions__ to see a complete list.
+Use the __get_jurisdiction__ function to return a data frame with all the jurisdictions. When you supply the jurisdiction ID parameter, the function returns the details of just that jurisdiction. Use the output from the __get_jurisdiction__ function to merge with data from the __get_values__ function. Jurisdicitions are constantly added to each new iteration of RegData so consult the data with __get_jurisdictions__ to see a complete list.
 
 ```{r}
 get_jurisdictions(38)
@@ -118,14 +118,14 @@ print(vals)
 You can obtain data for any of the three subgroups for each series - agencies, industries, and occupations (when they become available).
 
 #### Values by Agencies
-To obtain the restrictions for a specific agency (or agencies), the series id supplied must be in the list of available series by agency. To recap, the list of available series for an agency is available via the __list_series(id,by='agency')__ function, and the list of agencies with data is available via __get_agencies__ function.
+To obtain the restrictions for a specific agency (or agencies), the series id supplied must be in the list of available series by agency. To recap, the list of available series for an agency is available via the __get_series(id,by='agency')__ function, and the list of agencies with data is available via __get_agencies__ function.
 
 ```{r}
 #Identify all agencies
 get_agencies()
 
-#Find the available series for this agency, suppose agency_ids 81 and 84
-list_series(id=91, by='agencies')
+#Find the available series for this agency, suppose agency_ids 81 and 84 
+get_series(id=91, by='agencies')
 
 #Call the get_values() for this agency and series 91 and 92
 get_values(jurisdiction = 38, series = c(91,92), date = c(1990,2018), agency = c(81,84))
@@ -190,10 +190,10 @@ get_industry_values(industry_type = "3-Digit", jurisdiction = 38, series = c(1,2
 ### Document-level data
 Where the previous instructions in this vignette account for aggregated data, document-level data will allow users to view or download specific documents by jurisdiction or agency. These data are large so it is not reccomended to make document-level calls unless there is a specific use case. 
 
-A list of document types can be viewed by jurisdiction (or all jurisdictions) through the __list_document_types__ function. In the example below, we look at all the document types for the state of Nebraska.
+A list of document types can be viewed by jurisdiction (or all jurisdictions) through the __get_document_types__ function. In the example below, we look at all the document types for the state of Nebraska.
 
 ```{r}
-list_document_types(jurisdiction = 78)
+get_document_types(jurisdiction = 78)
 ```
 
 Downloading documents allows the user to collect raw data from RegData for their own analysis. This is accomplished through the __get_documents__ function with attributes for jurisdiction and document type. It is HIGHLY reccomended that the user make an API call with a specific jurisdiction in mind. Pulling document-level data will take longer depending on the jurisdiction. Attempting to pull all jurisdictions will result in an error. The example below shows how to make a call. In this case, we do not let the function run in the vignette.
