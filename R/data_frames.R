@@ -58,7 +58,7 @@ get_industries <- function(jurisdiction = NA) {
 
   if (is.na(jurisdiction)) {
     print("You must specify a jurisdiction. Select from: ")
-    print(list_jurisdictions())
+    print(get_jurisdictions())
     stop()
   }
 
@@ -181,7 +181,7 @@ get_values <- function(jurisdiction, series, date = c(2015, 2020), summary = TRU
     url_compose <- paste0(url_compose, "&series=", series_str)
   }else {
     print("Valid series ID required. Select from the following list:")
-    print(list_series())
+    print(get_series())
     stop("Processing terminated.")
   }
   if (length(jurisdiction) > 0) {
@@ -251,7 +251,7 @@ get_country_values <- function(jurisdiction = c(38, 75), series = c(1, 2),
 
   if (length(jurisdiction) == 0) {
     print("You need to select at least one of the following jurisdiction IDs")
-    print(list_jurisdictions())
+    print(get_jurisdictions())
     stop()
   }else {
     jurisdiction_str <- paste0(jurisdiction, collapse = ",")
@@ -260,7 +260,7 @@ get_country_values <- function(jurisdiction = c(38, 75), series = c(1, 2),
 
   if (length(series) == 0) {
     print("You need to select at least one of the following series IDs")
-    print(list_series())
+    print(get_series())
     stop()
 
   }else {
@@ -292,7 +292,7 @@ get_country_values <- function(jurisdiction = c(38, 75), series = c(1, 2),
 
 #' Title Return the list of documents for a series-jurisdiction combination
 #'
-#' @param document_type Integer - ID of document type of interest. Obtain from list_document_types().
+#' @param document_type Integer - ID of document type of interest. Obtain from get_document_types().
 #' @param jurisdiction Integer - ID of jurisdiction of interest
 #' @return data frame
 #' @export
@@ -307,7 +307,7 @@ get_documents <- function(jurisdiction, document_type = 3) {
   }else {
 
     print("Please select jurisdictions from the list below:")
-    list_jurisdictions()
+    get_jurisdictions()
     stop("Jurisdiction is required.")
 
   }
@@ -317,7 +317,7 @@ get_documents <- function(jurisdiction, document_type = 3) {
   }
   else {
     print("Document type (documentType) is required. Select a document type from the list below:")
-    print(list_document_types(NULL))
+    print(get_document_types(NULL))
     stop("Invalid document type specified.")
   }
 
@@ -356,8 +356,8 @@ get_document_types <- function(jurisdiction = NA) {
 
 #' Return series values for a set of industry codes (using NAICS)
 #'
-#' @param jurisdiction An Integer - jurisdiction(s) of interest. Obtain list of jurisdictions from list_jurisdictions()
-#' @param series Integer -  (List of ) Series of interest. Obtain valid list from list_series(id, by)
+#' @param jurisdiction An Integer - jurisdiction(s) of interest. Obtain list of jurisdictions from get_jurisdictions()
+#' @param series Integer -  (List of ) Series of interest. Obtain valid list from get_series(id, by)
 #' @param date Date (string) - String format of dates. For summary data, just the year is enough. For daily data, use full date format such as
 #' '2018-10-12'
 #' @param agency Integer - List of agencies. Obtain from get_agencies()
@@ -365,7 +365,7 @@ get_document_types <- function(jurisdiction = NA) {
 #' @param industry String - List of industry codes to obtain.
 #' @param date_is_range Boolean - Date parameter is range
 #' @param filtered_only Boolean - For industry values, include only good-performing industry classifications.
-#' @param document_type Integer - The type of document. Obtain from list_document_types()
+#' @param document_type Integer - The type of document. Obtain from get_document_types()
 #' @param summary Boolean - Summary data
 #'
 #' @return Data frame
@@ -402,7 +402,7 @@ get_industry_values <- function(jurisdiction = c(38),
     url_compose <- paste0(get_baseURL(), "/values?jurisdictions=", jur_str)
   }else {
     print("Jurisdiction is required. Select valid jurisdiction IDs from the following:")
-    print(list_jurisdictions())
+    print(get_jurisdictions())
     stop("Invalid jurisdiction specified.")
   }
 
@@ -467,13 +467,13 @@ get_industry_values <- function(jurisdiction = c(38),
   }
 
   if (length(document_type) > 0) {
-    #dt <- list_document_types()
+    #dt <- get_document_types()
     url_compose <- paste0(url_compose, "&documentType=", document_type_str)
 
 
   } else {
     print("Select valid Document Type (documentType) from the following list:")
-    list_document_types()
+    get_document_types()
   }
 
   if (length(agency) > 0) {
