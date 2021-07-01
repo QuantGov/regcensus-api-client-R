@@ -7,8 +7,10 @@
 #' @return data frame
 #'
 
-clean_column_names <- function(json){
+clean_column_names <- function(data_frame){
+  if(is.data.frame(data_frame)){
 
+  }
 }
 
 ## Get base url

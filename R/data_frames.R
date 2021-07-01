@@ -172,7 +172,7 @@ get_values <- function(jurisdiction, series, date = c(2015, 2020), summary = TRU
   agency_str <- paste(agency, collapse = ",")
 
   # Use document endpoint if summary is false
-  if (summary) {
+  if (!summary) {
     url_compose <- paste0(get_baseURL(), "/values/documents?")
   } else {
     url_compose <- paste0(get_baseURL(), "/values?")
