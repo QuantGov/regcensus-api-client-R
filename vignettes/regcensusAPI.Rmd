@@ -66,10 +66,10 @@ The **get** functions return the details about RegData metadata. These metadata 
 
 ### Jurisdictions
 
-Use the **get_jurisdiction** function to return a data frame with all the jurisdictions. When you supply the jurisdiction ID parameter, the function returns the details of just that jurisdiction. Use the output from the **get_jurisdiction** function to merge with data from the **get_values** function. Jurisdicitions are constantly added to each new iteration of RegData so consult the data with **get_jurisdictions** to see a complete list.
+Use the **get_jurisdiction** function to return a data frame with all the jurisdictions. When you supply the jurisdiction parameter, the function returns the details of just that jurisdiction. Use the output from the **get_jurisdiction** function to merge with data from the **get_values** function. Jurisdictions are constantly added to each new iteration of RegData so consult the data with **get_jurisdictions** to see a complete list.
 
 ```{r}
-get_jurisdictions(38)
+#get_jurisdictions(38)
 ```
 
 ### Agencies
@@ -133,8 +133,7 @@ The **get_values**\_ function is the primary function for obtaining RegData from
 In the example below, we are interested in the total number of restrictions and total number of words (get_topics(1)) for the US (get_jurisdictions(38)) for all years between and including 2010 and 2018.
 
 ```{r}
-vals <- get_values(jurisdiction = 38, series = c(1,2), date = c(2010,2018))
-print(vals)
+get_values(jurisdiction = 38, series = c(1,2), date = c(2010,2018), document_type = 1)
 ```
 
 ### Values by Subgroup
@@ -149,11 +148,9 @@ To obtain the restrictions for a specific agency (or agencies), the series id su
 #Identify all agencies
 get_agencies()
 
-#Find the available series for this agency, suppose agency_ids 81 and 84 
-get_series(id=91, by='agencies')
 
 #Call the get_values() for this agency and series 91 and 92
-get_values(jurisdiction = 38, series = c(91,92), date = c(1990,2018), agency = c(81,84))
+get_values(jurisdiction = 38, series = c(13), date = c(1990,2018), agency = c(66), document_type = 1)
 ```
 
 #### Values by Agency and Industry
@@ -165,7 +162,7 @@ To pull industry-relevant restrictions for an agency, call **get_agencies** with
 In the example below, the series 92 (Restrictions by Agency and Industry), we can request data for the two industries 111 and 33 by the following code snippet.
 
 ```{r}
-get_values(jurisdiction = 38, series = c(92), date = c(1990,2000), industry = c('111','33'), agency = 66)
+get_values(jurisdiction = 38, series = c(30), date = c(1990,2000), industry = c('111','33'), agency = 66)
 ```
 
 ### Merging with Metadata
@@ -181,11 +178,12 @@ require(dplyr)
 require(pander)
 agencies <- get_agencies()
 agency_by_industry <- get_values(jurisdiction = 38,
-                                 series = c(92), date = c(1990,2000), 
+                                 series = c(30), date = c(1990,2000), 
                                  industry = c('111','33'), 
+                                 document_type = 1,
                                  agency = c(66,111))
 agency_restrictions_ind <- agency_by_industry %>%
-  dplyr::left_join(agencies, by=c('agency_agency_id'='agency_id'))
+  dplyr::left_join(agencies, by=c('agency.agencyID'='agencyID'))
 
 pander::pandoc.table(agency_restrictions_ind)
 ```
@@ -215,7 +213,7 @@ Much in the same way **get_country_values** pulls all jurisdictions, **get_indus
 The example below gathers data for all industries at the 3-Digit NAICS level on the national level of the United States for 2010 and 2011.
 
 ```{r}
-get_industry_values(industry_type = "3-Digit", jurisdiction = 38, series = c(1,2), data = c(2010, 2011), date_is_range = TRUE, filtered = TRUE)
+get_industry_values(industry_type = "3-Digit", jurisdictions = 38, series = c(9), dat = c(2010, 2011), date_is_range = TRUE, filtered = TRUE)
 ```
 
 ### Document-level data
