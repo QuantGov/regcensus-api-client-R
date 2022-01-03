@@ -16,6 +16,6 @@ dataframe
 Return dataframe with all jurisdictions-series-years of data available
 }
 \examples{
-get_series_period()
-get_series_period(38)
+get_periods()
+get_periods(38)
 }

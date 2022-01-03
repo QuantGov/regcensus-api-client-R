@@ -1,4 +1,17 @@
 # HELPER FUNCTIONS
+#' Given a flattened json file, produce R friendly column names.
+#'
+#' @param json - JSON file
+#'
+#' @return data frame
+#'
+
+clean_column_names <- function(data_frame){
+  if(is.data.frame(data_frame)){
+
+  }
+}
+
 ## Get base url
 get_baseURL <- function() {
     return("https://api.quantgov.org")

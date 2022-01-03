@@ -1,30 +1,41 @@
 Package: regcensusAPI
-Type: Package
-Title: Generate Data Frames from RegData
-Version: 0.2.12
-Authors@R: person("Michael", "Kotrous", email = "mkotrous@mercatus.gmu.edu",
-                  role = c("aut", "cre"))
-Description: A client tool to access the RegCensus API. RegCensus is a repository of RegData, a quantification of regulatory
-  restrictions across a number of jurisdictions. This api client provides methods to pull the fine-grained data from RegData, 
-  in addition to other relevant data from other sources.
+Title: Retrieve Data from RegData API
+Version: 0.1.2.4
+Authors@R: 
+    c(person(given = "Kofi",
+           family = "Ampaabeng",
+           role = c("aut", "cre"),
+           email = "kampaabeng@mercatus.gmu.edu",
+           comment = c(ORCID = "0000-0001-5511-699X")),
+    person(given = "Michael",
+          family = "Kotrous",
+          role = c("aut", "cph"),
+          email = "mkotrous@mercatus.gmu.edu",
+          comment = c(ORCID = "0000-0003-1957-5827")))  
+Description: Download data from the Mercatus Center at George Mason University's 'RegData.'
+  'RegData' quantifies the number of regulations that have been issued by a jurisdiction. Currently, there are data
+  for US, Canada, and Australia. This package allows easy access to the data produced by RegData.
 License: MIT + file LICENSE
-URL: https://api.quantgov.org/
-BugReports: https://github.com/QuantGov/regcensus-api
+Imports:
+  dplyr,
+  jsonlite,
+  snakecase,
+  curl,
+  pander,
+  pbapply,
+  urltools,
+  stringr,
+  stringi,
+  rlang,
+  R.cache,
+  markdown,
+  rmarkdown
 Encoding: UTF-8
 LazyData: true
-Imports: 
-  jsonlite, 
-  snakecase, 
-  pander,
-  dplyr,
-  stringr,
-  rmarkdown
-Depends: R (>= 3.5.2)
-Author: Michael Kotrous [aut, cre]
-Maintainer: Michael Kotrous <mkotrous@mercatus.gmu.edu>
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr
 Suggests: 
     knitr,
-    rmarkdown,
-    testthat
-VignetteBuilder: knitr
+    testthat (>= 3.0.0)
+URL: https://api.quantgov.org
+Config/testthat/edition: 3

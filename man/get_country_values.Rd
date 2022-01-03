@@ -8,9 +8,16 @@ national and sub-national (for example, state/province) within the jurisdiction.
 get_country_values(
   jurisdiction = c(38, 75),
   series = c(1, 2),
+<<<<<<< HEAD
   years = c(2010, 2011),
   industries = NA,
   dateIsRange = TRUE,
+=======
+  date = c(2010, 2011),
+  industries = NA,
+  date_is_range = TRUE,
+  document_type = 3,
+>>>>>>> kampaabeng
   filtered = TRUE
 )
 }
@@ -19,11 +26,23 @@ get_country_values(
 
 \item{series}{Series IDs}
 
+<<<<<<< HEAD
 \item{years}{Integers for years}
+=======
+\item{date}{Date string - For period of interest}
+>>>>>>> kampaabeng
 
 \item{dateIsRange}{A boolean to indicate if the years values is range instead of just single values}
 
+<<<<<<< HEAD
 \item{filtered}{A boolean}
+=======
+\item{date_is_range}{Boolean - Indicate if the years values is range instead of just single values}
+
+\item{document_type}{Integer - ID of document type}
+
+\item{filtered}{Boolean - Indicate whether to return filtered data, i.e., the industry-relevant data with poorly classified industries excluded}
+>>>>>>> kampaabeng
 }
 \value{
 dataframe
